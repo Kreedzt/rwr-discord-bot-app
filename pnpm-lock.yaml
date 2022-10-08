@@ -1,0 +1,354 @@
+lockfileVersion: 5.4
+
+specifiers:
+  '@types/node': ^18.7.23
+  axios: ^0.27.2
+  discord.js: ^14.5.0
+  dotenv: ^16.0.2
+  typescript: ^4.8.4
+
+dependencies:
+  axios: registry.npmmirror.com/axios/0.27.2
+  discord.js: registry.npmmirror.com/discord.js/14.5.0
+  dotenv: registry.npmmirror.com/dotenv/16.0.2
+
+devDependencies:
+  '@types/node': registry.npmmirror.com/@types/node/18.7.23
+  typescript: registry.npmmirror.com/typescript/4.8.4
+
+packages:
+
+  registry.npmmirror.com/@discordjs/builders/1.2.0:
+    resolution: {integrity: sha512-ARy4BUTMU+S0ZI6605NDqfWO+qZqV2d/xfY32z3hVSsd9IaAKJBZ1ILTZLy87oIjW8+gUpQmk9Kt0ZP9bmmd8Q==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/@discordjs/builders/-/builders-1.2.0.tgz}
+    name: '@discordjs/builders'
+    version: 1.2.0
+    engines: {node: '>=16.9.0'}
+    dependencies:
+      '@sapphire/shapeshift': registry.npmmirror.com/@sapphire/shapeshift/3.6.0
+      discord-api-types: registry.npmmirror.com/discord-api-types/0.37.11
+      fast-deep-equal: registry.npmmirror.com/fast-deep-equal/3.1.3
+      ts-mixer: registry.npmmirror.com/ts-mixer/6.0.1
+      tslib: registry.npmmirror.com/tslib/2.4.0
+    dev: false
+
+  registry.npmmirror.com/@discordjs/collection/1.1.0:
+    resolution: {integrity: sha512-PQ2Bv6pnT7aGPCKWbvvNRww5tYCGpggIQVgpuF9TdDPeR6n6vQYxezXiLVOS9z2B62Dp4c+qepQ15SgJbLYtCQ==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/@discordjs/collection/-/collection-1.1.0.tgz}
+    name: '@discordjs/collection'
+    version: 1.1.0
+    engines: {node: '>=16.9.0'}
+    dev: false
+
+  registry.npmmirror.com/@discordjs/rest/1.2.0:
+    resolution: {integrity: sha512-WX79uzMdnBzFNgsDdA440Ia2q7SMk6F8bNaPMmV4i6qcUNJpg+Sgb2spKuQmQPlNTX4HCntR609xHqUkK1tnVQ==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/@discordjs/rest/-/rest-1.2.0.tgz}
+    name: '@discordjs/rest'
+    version: 1.2.0
+    engines: {node: '>=16.9.0'}
+    dependencies:
+      '@discordjs/collection': registry.npmmirror.com/@discordjs/collection/1.1.0
+      '@sapphire/async-queue': registry.npmmirror.com/@sapphire/async-queue/1.5.0
+      '@sapphire/snowflake': registry.npmmirror.com/@sapphire/snowflake/3.2.2
+      discord-api-types: registry.npmmirror.com/discord-api-types/0.37.11
+      file-type: registry.npmmirror.com/file-type/18.0.0
+      tslib: registry.npmmirror.com/tslib/2.4.0
+      undici: registry.npmmirror.com/undici/5.10.0
+    dev: false
+
+  registry.npmmirror.com/@sapphire/async-queue/1.5.0:
+    resolution: {integrity: sha512-JkLdIsP8fPAdh9ZZjrbHWR/+mZj0wvKS5ICibcLrRI1j84UmLMshx5n9QmL8b95d4onJ2xxiyugTgSAX7AalmA==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/@sapphire/async-queue/-/async-queue-1.5.0.tgz}
+    name: '@sapphire/async-queue'
+    version: 1.5.0
+    engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
+    dev: false
+
+  registry.npmmirror.com/@sapphire/shapeshift/3.6.0:
+    resolution: {integrity: sha512-tu2WLRdo5wotHRvsCkspg3qMiP6ETC3Q1dns1Q5V6zKUki+1itq6AbhMwohF9ZcLoYqg+Y8LkgRRtVxxTQVTBQ==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/@sapphire/shapeshift/-/shapeshift-3.6.0.tgz}
+    name: '@sapphire/shapeshift'
+    version: 3.6.0
+    engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
+    dependencies:
+      fast-deep-equal: registry.npmmirror.com/fast-deep-equal/3.1.3
+      lodash.uniqwith: registry.npmmirror.com/lodash.uniqwith/4.5.0
+    dev: false
+
+  registry.npmmirror.com/@sapphire/snowflake/3.2.2:
+    resolution: {integrity: sha512-ula2O0kpSZtX9rKXNeQMrHwNd7E4jPDJYUXmEGTFdMRfyfMw+FPyh04oKMjAiDuOi64bYgVkOV3MjK+loImFhQ==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/@sapphire/snowflake/-/snowflake-3.2.2.tgz}
+    name: '@sapphire/snowflake'
+    version: 3.2.2
+    engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
+    dev: false
+
+  registry.npmmirror.com/@tokenizer/token/0.3.0:
+    resolution: {integrity: sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/@tokenizer/token/-/token-0.3.0.tgz}
+    name: '@tokenizer/token'
+    version: 0.3.0
+    dev: false
+
+  registry.npmmirror.com/@types/node/18.7.23:
+    resolution: {integrity: sha512-DWNcCHolDq0ZKGizjx2DZjR/PqsYwAcYUJmfMWqtVU2MBMG5Mo+xFZrhGId5r/O5HOuMPyQEcM6KUBp5lBZZBg==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/@types/node/-/node-18.7.23.tgz}
+    name: '@types/node'
+    version: 18.7.23
+
+  registry.npmmirror.com/@types/ws/8.5.3:
+    resolution: {integrity: sha512-6YOoWjruKj1uLf3INHH7D3qTXwFfEsg1kf3c0uDdSBJwfa/llkwIjrAGV7j7mVgGNbzTQ3HiHKKDXl6bJPD97w==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/@types/ws/-/ws-8.5.3.tgz}
+    name: '@types/ws'
+    version: 8.5.3
+    dependencies:
+      '@types/node': registry.npmmirror.com/@types/node/18.7.23
+    dev: false
+
+  registry.npmmirror.com/asynckit/0.4.0:
+    resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/asynckit/-/asynckit-0.4.0.tgz}
+    name: asynckit
+    version: 0.4.0
+    dev: false
+
+  registry.npmmirror.com/axios/0.27.2:
+    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/axios/-/axios-0.27.2.tgz}
+    name: axios
+    version: 0.27.2
+    dependencies:
+      follow-redirects: registry.npmmirror.com/follow-redirects/1.15.2
+      form-data: registry.npmmirror.com/form-data/4.0.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  registry.npmmirror.com/combined-stream/1.0.8:
+    resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/combined-stream/-/combined-stream-1.0.8.tgz}
+    name: combined-stream
+    version: 1.0.8
+    engines: {node: '>= 0.8'}
+    dependencies:
+      delayed-stream: registry.npmmirror.com/delayed-stream/1.0.0
+    dev: false
+
+  registry.npmmirror.com/delayed-stream/1.0.0:
+    resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/delayed-stream/-/delayed-stream-1.0.0.tgz}
+    name: delayed-stream
+    version: 1.0.0
+    engines: {node: '>=0.4.0'}
+    dev: false
+
+  registry.npmmirror.com/discord-api-types/0.37.11:
+    resolution: {integrity: sha512-cUNXrCdD4hEj5iJ9SligTNur64rNnLX5s6CbvmatRpWKMZtrLTOlyLhuXmVbjfDXeXH7os8Qb71Wa7IEhC27Sw==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/discord-api-types/-/discord-api-types-0.37.11.tgz}
+    name: discord-api-types
+    version: 0.37.11
+    dev: false
+
+  registry.npmmirror.com/discord.js/14.5.0:
+    resolution: {integrity: sha512-Kd5OqdeiXe3t9eHUHCzf1r3LmKpeJJ7lKqwlWX1qdC0WfsbO2K3kucIDLfe0INnZVZaErUQ6/U6kGbTDnGgwZg==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/discord.js/-/discord.js-14.5.0.tgz}
+    name: discord.js
+    version: 14.5.0
+    engines: {node: '>=16.9.0'}
+    dependencies:
+      '@discordjs/builders': registry.npmmirror.com/@discordjs/builders/1.2.0
+      '@discordjs/collection': registry.npmmirror.com/@discordjs/collection/1.1.0
+      '@discordjs/rest': registry.npmmirror.com/@discordjs/rest/1.2.0
+      '@sapphire/snowflake': registry.npmmirror.com/@sapphire/snowflake/3.2.2
+      '@types/ws': registry.npmmirror.com/@types/ws/8.5.3
+      discord-api-types: registry.npmmirror.com/discord-api-types/0.37.11
+      fast-deep-equal: registry.npmmirror.com/fast-deep-equal/3.1.3
+      lodash.snakecase: registry.npmmirror.com/lodash.snakecase/4.1.1
+      tslib: registry.npmmirror.com/tslib/2.4.0
+      undici: registry.npmmirror.com/undici/5.10.0
+      ws: registry.npmmirror.com/ws/8.9.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+    dev: false
+
+  registry.npmmirror.com/dotenv/16.0.2:
+    resolution: {integrity: sha512-JvpYKUmzQhYoIFgK2MOnF3bciIZoItIIoryihy0rIA+H4Jy0FmgyKYAHCTN98P5ybGSJcIFbh6QKeJdtZd1qhA==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/dotenv/-/dotenv-16.0.2.tgz}
+    name: dotenv
+    version: 16.0.2
+    engines: {node: '>=12'}
+    dev: false
+
+  registry.npmmirror.com/fast-deep-equal/3.1.3:
+    resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz}
+    name: fast-deep-equal
+    version: 3.1.3
+    dev: false
+
+  registry.npmmirror.com/file-type/18.0.0:
+    resolution: {integrity: sha512-jjMwFpnW8PKofLE/4ohlhqwDk5k0NC6iy0UHAJFKoY1fQeGMN0GDdLgHQrvCbSpMwbqzoCZhRI5dETCZna5qVA==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/file-type/-/file-type-18.0.0.tgz}
+    name: file-type
+    version: 18.0.0
+    engines: {node: '>=14.16'}
+    dependencies:
+      readable-web-to-node-stream: registry.npmmirror.com/readable-web-to-node-stream/3.0.2
+      strtok3: registry.npmmirror.com/strtok3/7.0.0
+      token-types: registry.npmmirror.com/token-types/5.0.1
+    dev: false
+
+  registry.npmmirror.com/follow-redirects/1.15.2:
+    resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/follow-redirects/-/follow-redirects-1.15.2.tgz}
+    name: follow-redirects
+    version: 1.15.2
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    dev: false
+
+  registry.npmmirror.com/form-data/4.0.0:
+    resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/form-data/-/form-data-4.0.0.tgz}
+    name: form-data
+    version: 4.0.0
+    engines: {node: '>= 6'}
+    dependencies:
+      asynckit: registry.npmmirror.com/asynckit/0.4.0
+      combined-stream: registry.npmmirror.com/combined-stream/1.0.8
+      mime-types: registry.npmmirror.com/mime-types/2.1.35
+    dev: false
+
+  registry.npmmirror.com/ieee754/1.2.1:
+    resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/ieee754/-/ieee754-1.2.1.tgz}
+    name: ieee754
+    version: 1.2.1
+    dev: false
+
+  registry.npmmirror.com/inherits/2.0.4:
+    resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/inherits/-/inherits-2.0.4.tgz}
+    name: inherits
+    version: 2.0.4
+    dev: false
+
+  registry.npmmirror.com/lodash.snakecase/4.1.1:
+    resolution: {integrity: sha512-QZ1d4xoBHYUeuouhEq3lk3Uq7ldgyFXGBhg04+oRLnIz8o9T65Eh+8YdroUwn846zchkA9yDsDl5CVVaV2nqYw==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/lodash.snakecase/-/lodash.snakecase-4.1.1.tgz}
+    name: lodash.snakecase
+    version: 4.1.1
+    dev: false
+
+  registry.npmmirror.com/lodash.uniqwith/4.5.0:
+    resolution: {integrity: sha512-7lYL8bLopMoy4CTICbxygAUq6CdRJ36vFc80DucPueUee+d5NBRxz3FdT9Pes/HEx5mPoT9jwnsEJWz1N7uq7Q==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/lodash.uniqwith/-/lodash.uniqwith-4.5.0.tgz}
+    name: lodash.uniqwith
+    version: 4.5.0
+    dev: false
+
+  registry.npmmirror.com/mime-db/1.52.0:
+    resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/mime-db/-/mime-db-1.52.0.tgz}
+    name: mime-db
+    version: 1.52.0
+    engines: {node: '>= 0.6'}
+    dev: false
+
+  registry.npmmirror.com/mime-types/2.1.35:
+    resolution: {integrity: sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/mime-types/-/mime-types-2.1.35.tgz}
+    name: mime-types
+    version: 2.1.35
+    engines: {node: '>= 0.6'}
+    dependencies:
+      mime-db: registry.npmmirror.com/mime-db/1.52.0
+    dev: false
+
+  registry.npmmirror.com/peek-readable/5.0.0:
+    resolution: {integrity: sha512-YtCKvLUOvwtMGmrniQPdO7MwPjgkFBtFIrmfSbYmYuq3tKDV/mcfAhBth1+C3ru7uXIZasc/pHnb+YDYNkkj4A==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/peek-readable/-/peek-readable-5.0.0.tgz}
+    name: peek-readable
+    version: 5.0.0
+    engines: {node: '>=14.16'}
+    dev: false
+
+  registry.npmmirror.com/readable-stream/3.6.0:
+    resolution: {integrity: sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/readable-stream/-/readable-stream-3.6.0.tgz}
+    name: readable-stream
+    version: 3.6.0
+    engines: {node: '>= 6'}
+    dependencies:
+      inherits: registry.npmmirror.com/inherits/2.0.4
+      string_decoder: registry.npmmirror.com/string_decoder/1.3.0
+      util-deprecate: registry.npmmirror.com/util-deprecate/1.0.2
+    dev: false
+
+  registry.npmmirror.com/readable-web-to-node-stream/3.0.2:
+    resolution: {integrity: sha512-ePeK6cc1EcKLEhJFt/AebMCLL+GgSKhuygrZ/GLaKZYEecIgIECf4UaUuaByiGtzckwR4ain9VzUh95T1exYGw==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/readable-web-to-node-stream/-/readable-web-to-node-stream-3.0.2.tgz}
+    name: readable-web-to-node-stream
+    version: 3.0.2
+    engines: {node: '>=8'}
+    dependencies:
+      readable-stream: registry.npmmirror.com/readable-stream/3.6.0
+    dev: false
+
+  registry.npmmirror.com/safe-buffer/5.2.1:
+    resolution: {integrity: sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/safe-buffer/-/safe-buffer-5.2.1.tgz}
+    name: safe-buffer
+    version: 5.2.1
+    dev: false
+
+  registry.npmmirror.com/string_decoder/1.3.0:
+    resolution: {integrity: sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/string_decoder/-/string_decoder-1.3.0.tgz}
+    name: string_decoder
+    version: 1.3.0
+    dependencies:
+      safe-buffer: registry.npmmirror.com/safe-buffer/5.2.1
+    dev: false
+
+  registry.npmmirror.com/strtok3/7.0.0:
+    resolution: {integrity: sha512-pQ+V+nYQdC5H3Q7qBZAz/MO6lwGhoC2gOAjuouGf/VO0m7vQRh8QNMl2Uf6SwAtzZ9bOw3UIeBukEGNJl5dtXQ==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/strtok3/-/strtok3-7.0.0.tgz}
+    name: strtok3
+    version: 7.0.0
+    engines: {node: '>=14.16'}
+    dependencies:
+      '@tokenizer/token': registry.npmmirror.com/@tokenizer/token/0.3.0
+      peek-readable: registry.npmmirror.com/peek-readable/5.0.0
+    dev: false
+
+  registry.npmmirror.com/token-types/5.0.1:
+    resolution: {integrity: sha512-Y2fmSnZjQdDb9W4w4r1tswlMHylzWIeOKpx0aZH9BgGtACHhrk3OkT52AzwcuqTRBZtvvnTjDBh8eynMulu8Vg==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/token-types/-/token-types-5.0.1.tgz}
+    name: token-types
+    version: 5.0.1
+    engines: {node: '>=14.16'}
+    dependencies:
+      '@tokenizer/token': registry.npmmirror.com/@tokenizer/token/0.3.0
+      ieee754: registry.npmmirror.com/ieee754/1.2.1
+    dev: false
+
+  registry.npmmirror.com/ts-mixer/6.0.1:
+    resolution: {integrity: sha512-hvE+ZYXuINrx6Ei6D6hz+PTim0Uf++dYbK9FFifLNwQj+RwKquhQpn868yZsCtJYiclZF1u8l6WZxxKi+vv7Rg==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/ts-mixer/-/ts-mixer-6.0.1.tgz}
+    name: ts-mixer
+    version: 6.0.1
+    dev: false
+
+  registry.npmmirror.com/tslib/2.4.0:
+    resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/tslib/-/tslib-2.4.0.tgz}
+    name: tslib
+    version: 2.4.0
+    dev: false
+
+  registry.npmmirror.com/typescript/4.8.4:
+    resolution: {integrity: sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/typescript/-/typescript-4.8.4.tgz}
+    name: typescript
+    version: 4.8.4
+    engines: {node: '>=4.2.0'}
+    hasBin: true
+    dev: true
+
+  registry.npmmirror.com/undici/5.10.0:
+    resolution: {integrity: sha512-c8HsD3IbwmjjbLvoZuRI26TZic+TSEe8FPMLLOkN1AfYRhdjnKBU6yL+IwcSCbdZiX4e5t0lfMDLDCqj4Sq70g==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/undici/-/undici-5.10.0.tgz}
+    name: undici
+    version: 5.10.0
+    engines: {node: '>=12.18'}
+    dev: false
+
+  registry.npmmirror.com/util-deprecate/1.0.2:
+    resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/util-deprecate/-/util-deprecate-1.0.2.tgz}
+    name: util-deprecate
+    version: 1.0.2
+    dev: false
+
+  registry.npmmirror.com/ws/8.9.0:
+    resolution: {integrity: sha512-Ja7nszREasGaYUYCI2k4lCKIRTt+y7XuqVoHR44YpI49TtryyqbqvDMn5eqfW7e6HzTukDRIsXqzVHScqRcafg==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/ws/-/ws-8.9.0.tgz}
+    name: ws
+    version: 8.9.0
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+    dev: false
