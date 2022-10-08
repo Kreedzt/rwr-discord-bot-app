@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
 import * as discord from 'discord.js';
+import { getAllServerListDisplay, getAllServerListEmbedDisplay, queryAllServers } from './utils';
 
 dotenv.config();
 const env = process.env as {
@@ -7,6 +8,7 @@ const env = process.env as {
     GUILD_ID: string;
     DISCORD_TOKEN: string;
     PUBLIC_KEY: string;
+    SERVER_MATCH_REGEX: string
 };
 
 const { Client, GatewayIntentBits, REST, SlashCommandBuilder, Routes } =
@@ -50,6 +52,14 @@ client.on('interactionCreate', async (interaction) => {
     if (interaction.commandName === 'ping') {
         await interaction.reply('Pong!');
     } else if (interaction.commandName === 'servers') {
-        await interaction.reply({ content: 'server list', ephemeral: true });
+        const serverList = await queryAllServers(env.SERVER_MATCH_REGEX);
+        const text = getAllServerListDisplay(serverList);
+        let staticText = `Here's top 10 players count server list:\n`;
+        const totalText = staticText + text;
+        await interaction.reply({ content: totalText, ephemeral: true });
+
+        // Embed
+        // const embedText = getAllServerListEmbedDisplay(serverList);
+        // await interaction.reply({ embeds: embedText, ephemeral: true });
     }
 });

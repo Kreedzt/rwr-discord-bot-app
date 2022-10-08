@@ -5,6 +5,7 @@ specifiers:
   axios: ^0.27.2
   discord.js: ^14.5.0
   dotenv: ^16.0.2
+  fast-xml-parser: ^4.0.11
   prettier: ^2.7.1
   typescript: ^4.8.4
 
@@ -12,6 +13,7 @@ dependencies:
   axios: registry.npmmirror.com/axios/0.27.2
   discord.js: registry.npmmirror.com/discord.js/14.5.0
   dotenv: registry.npmmirror.com/dotenv/16.0.2
+  fast-xml-parser: 4.0.11
 
 devDependencies:
   '@types/node': registry.npmmirror.com/@types/node/18.7.23
@@ -19,6 +21,17 @@ devDependencies:
   typescript: registry.npmmirror.com/typescript/4.8.4
 
 packages:
+
+  /fast-xml-parser/4.0.11:
+    resolution: {integrity: sha512-4aUg3aNRR/WjQAcpceODG1C3x3lFANXRo8+1biqfieHmg9pyMt7qB4lQV/Ta6sJCTbA5vfD8fnA8S54JATiFUA==}
+    hasBin: true
+    dependencies:
+      strnum: 1.0.5
+    dev: false
+
+  /strnum/1.0.5:
+    resolution: {integrity: sha512-J8bbNyKKXl5qYcR36TIO8W3mVGVHrmmxsd5PAItGkmyzwJvybiw2IVq5nqd0i4LSNSkB/sx9VHllbfFdr9k1JA==}
+    dev: false
 
   registry.npmmirror.com/@discordjs/builders/1.2.0:
     resolution: {integrity: sha512-ARy4BUTMU+S0ZI6605NDqfWO+qZqV2d/xfY32z3hVSsd9IaAKJBZ1ILTZLy87oIjW8+gUpQmk9Kt0ZP9bmmd8Q==, registry: https://packages.aliyun.com/6065355e32fceefde379c17e/npm/npm-registry/, tarball: https://registry.npmmirror.com/@discordjs/builders/-/builders-1.2.0.tgz}
