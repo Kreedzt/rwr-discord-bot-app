@@ -11,7 +11,7 @@ const SERVER_API_URL = "http://rwr.runningwithrifles.com/rwr_server_list";
  * @param server server item
  * @returns player list
  */
- const getCorrectPlayersList = (server: ResServerItem): string[] => {
+const getCorrectPlayersList = (server: ResServerItem): string[] => {
     if (!server.player) {
         return [];
     }
@@ -136,13 +136,21 @@ export const queryAllServers = async (matchRegex?: string): Promise<OnlineServer
  * @param end end index, not included
  * @returns formatted combined sliced server display text
  */
-export const getSliceServerListDisplay = (servers: OnlineServerItem[], start: number, end: number): string => {
+export const getSliceServerListDisplay = (servers: OnlineServerItem[], start: number, end: number): {
+    text: string;
+    count: number;
+} => {
     let text = '';
+    let count = 0;
     servers.slice(start, end).forEach(s => {
+        ++count;
         text += getServerInfoDisplayText(s);
     });
 
-    return text;
+    return {
+        text,
+        count
+    };
 }
 
 /**
@@ -187,26 +195,63 @@ const getUserInfoInServerDisplayText = (user: string, server: OnlineServerItem):
  * @param serverList all server list
  * @returns formatted user in server combined text
  */
-export const getUserInServerListDisplay = (user: string, serverList: OnlineServerItem[]): string => {
+export const getUserInServerListDisplay = (user: string, serverList: OnlineServerItem[]): {
+    text: string;
+    count: number;
+} => {
     let text = '';
 
-    let totalCount = 0;
+    let count = 0;
 
     serverList.forEach(s => {
         const playersList = getCorrectPlayersList(s);
 
         playersList.forEach(player => {
-            if (totalCount === QUERY_USER_IN_SERVERS_LIMIT) {
-                return;
-            }
             if (player.includes(user)) {
+                count += 1;
+
+                if (count >= QUERY_USER_IN_SERVERS_LIMIT) {
+                    return;
+                }
+
                 text += getUserInfoInServerDisplayText(player, s);
-                totalCount += 1;
             }
         })
     });
 
-    text += `Total ${totalCount} results.(limit to display ${QUERY_USER_IN_SERVERS_LIMIT} results.)`;
+    return {
+        text,
+        count
+    };
+}
+
+/**
+ * Get formmated all server & user statistics text
+ * @param serverList all server list
+ * @returns formatted all server & user statistics
+ */
+export const getAllServerStatisticsDisplay = (serverList: OnlineServerItem[]): string => {
+    let text = '';
+
+    let serversCount = serverList.length;
+    let capacityCount = 0;
+    let playersCount = 0;
+
+    serverList.forEach(s => {
+       capacityCount += s.max_players;
+
+       const playersArr = getCorrectPlayersList(s);
+
+       playersCount += playersArr.length;
+    });
+
+    const serversCountText = `Total ${bold(serversCount.toString())} server(s) online\n\n`;
+
+    text += serversCountText;
+
+    const playersCountText = `Total ${bold(playersCount.toString())}/${capacityCount} player(s) online\n\n`;
+
+    text += playersCountText;
 
     return text;
 }

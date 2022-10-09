@@ -1,6 +1,7 @@
 export enum RegisterCommand {
     SERVERS = 'servers',
-    USER = 'user'
+    USER = 'user',
+    STATS = 'stats'
 }
 
 export const QUERY_SERVERS_LIMIT = 10;

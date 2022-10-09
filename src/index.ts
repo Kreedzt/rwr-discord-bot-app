@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 import * as discord from 'discord.js';
-import { queryAllServers, getAllServerListDisplay, getSliceServerListDisplay, getUserInServerListDisplay } from './utils';
+import { queryAllServers, getAllServerListDisplay, getSliceServerListDisplay, getUserInServerListDisplay, getAllServerStatisticsDisplay } from './utils';
 import { RegisterCommand, QUERY_SERVERS_LIMIT, QUERY_USER_IN_SERVERS_LIMIT } from './constants';
 import { inlineCode } from 'discord.js';
 
@@ -32,8 +32,8 @@ const commands = [
         .setName(RegisterCommand.SERVERS)
         .setDescription(`Replies ${QUERY_SERVERS_LIMIT} server status, default is top ${QUERY_SERVERS_LIMIT} server`)
         .addNumberOption(option =>
-            option.setName('start')
-                .setDescription('The start index, started with 0')
+            option.setName('page')
+                .setDescription('The page number, start from 1')
                 .setRequired(false)),
     new SlashCommandBuilder()
         .setName(RegisterCommand.USER)
@@ -41,7 +41,10 @@ const commands = [
         .addStringOption(option =>
             option.setName('name')
                 .setDescription('Enter user name in the rwr game')
-                .setRequired(true))
+                .setRequired(true)),
+    new SlashCommandBuilder()
+        .setName(RegisterCommand.STATS)
+        .setDescription('Get all servers statistics')
 ].map((command) => command.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(env.DISCORD_TOKEN);
@@ -66,18 +69,35 @@ client.on('interactionCreate', async (interaction) => {
         case RegisterCommand.SERVERS: {
             const serverList = await queryAllServers(env.SERVER_MATCH_REGEX);
 
-            const startIndex = interaction.options.getNumber('start', false) ?? 0;
+            const inputPageNum = interaction.options.getNumber('page', false);
 
-            const text = getSliceServerListDisplay(serverList, startIndex, startIndex + QUERY_SERVERS_LIMIT);
-            let staticText = '';
+            const pageNum = inputPageNum ? inputPageNum - 1 : 0;
+
+            const startIndex = pageNum * QUERY_SERVERS_LIMIT;
+            const endIndex = startIndex + QUERY_SERVERS_LIMIT;
+
+            const { text, count } = getSliceServerListDisplay(serverList, startIndex, endIndex);
+
+            let titleText = '';
 
             if (startIndex === 0) {
-                staticText = `Here's top ${QUERY_SERVERS_LIMIT} players count server list:\n`;
+                titleText = `Here's top ${QUERY_SERVERS_LIMIT} players count server list:\n`;
             } else {
-                staticText = `Here's players count server list start index with ${startIndex}:\n`;
+                titleText = `Here's players count server list top ${startIndex}-${endIndex}:\n`;
             }
 
-            const totalText = staticText + text;
+            if (count === 0) {
+                const nothingText = titleText + '\n No more servers.';
+
+                console.log('> replay servers command');
+                console.log(nothingText);
+                await interaction.reply({ content: nothingText, ephemeral: true });
+                return;
+            }
+
+            const footerText = `Total ${inlineCode(serverList.length.toString())} server(s), current: ${inlineCode((startIndex + 1).toString())} - ${inlineCode((startIndex + count).toString())}`;
+
+            const totalText = titleText + text + footerText;
             console.log('> replay servers command');
             console.log(totalText);
             await interaction.reply({ content: totalText, ephemeral: true });
@@ -88,13 +108,36 @@ client.on('interactionCreate', async (interaction) => {
 
             const queryUserName = interaction.options.getString('name', true).toUpperCase();
 
-            const staticText = `Here's query ${inlineCode(queryUserName)} results:\n\n`;
+            const titleText = `Here's query ${inlineCode(queryUserName)} results:\n\n`;
 
-            const text = getUserInServerListDisplay(queryUserName, serverList);
+            const { text, count } = getUserInServerListDisplay(queryUserName, serverList);
 
-            const totalText = staticText + text;
+            if (count === 0) {
+                const nothingText = titleText + '\n No more users.';
+
+                console.log('> replay user command');
+                console.log(nothingText);
+                await interaction.reply({ content: nothingText, ephemeral: true });
+                return;
+            }
+
+            const footerText = `Total ${inlineCode(count.toString())} results.(limited to display ${QUERY_USER_IN_SERVERS_LIMIT} results.)`;
+
+            const totalText = titleText + text + footerText;
 
             console.log('> replay user command');
+            console.log(totalText);
+            await interaction.reply({ content: totalText, ephemeral: true });
+            break;
+        }
+        case RegisterCommand.STATS: {
+            const serverList = await queryAllServers(env.SERVER_MATCH_REGEX);
+
+            const text = getAllServerStatisticsDisplay(serverList);
+
+            const totalText = text;
+
+            console.log('> replay stats command');
             console.log(totalText);
             await interaction.reply({ content: totalText, ephemeral: true });
             break;
