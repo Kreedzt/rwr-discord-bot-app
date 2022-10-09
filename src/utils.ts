@@ -175,7 +175,10 @@ const getCorrectPlayersList = (server: OnlineServerItem): string[] => {
         return [];
     }
 
-    return Array.isArray(server.player) ? server.player : [server.player];
+    const playersArray = Array.isArray(server.player) ? server.player : [server.player];
+
+    // force to string array
+    return playersArray.map(p => p.toString());
 }
 
 /**
