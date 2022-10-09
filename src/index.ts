@@ -29,9 +29,6 @@ console.log('> Discord Bot started.');
 // commands
 const commands = [
     new SlashCommandBuilder()
-        .setName(RegisterCommand.PING)
-        .setDescription('Replies with pong!'),
-    new SlashCommandBuilder()
         .setName(RegisterCommand.SERVERS)
         .setDescription(`Replies ${QUERY_SERVERS_LIMIT} server status, default is top ${QUERY_SERVERS_LIMIT} server`)
         .addNumberOption(option =>
@@ -63,6 +60,7 @@ client.on('interactionCreate', async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
 
     console.log('> interactionCreate receviced command', interaction.commandName, interaction.options.data);
+    console.log('> triggered by', interaction.user);
 
     switch (interaction.commandName as RegisterCommand) {
         case RegisterCommand.PING: {

@@ -1,5 +1,4 @@
 export enum RegisterCommand {
-    PING = 'ping',
     SERVERS = 'servers',
     USER = 'user'
 }
