@@ -7,6 +7,22 @@ import { ResServerItem, Res, OnlineServerItem } from './types';
 const SERVER_API_URL = "http://rwr.runningwithrifles.com/rwr_server_list";
 
 /**
+ * Get players list string array
+ * @param server server item
+ * @returns player list
+ */
+ const getCorrectPlayersList = (server: ResServerItem): string[] => {
+    if (!server.player) {
+        return [];
+    }
+
+    const playersArray = Array.isArray(server.player) ? server.player : [server.player];
+
+    // force to string array
+    return playersArray.map(p => p.toString());
+}
+
+/**
  * Send Http Request, get server list xml raw string
  * @param params query params
  * @returns server list raw xml string
@@ -43,7 +59,7 @@ export const parseServerListFromString = (
 
     return res.result.server.map(s => ({
         ...s,
-        playersCount: s.player.length
+        playersCount: getCorrectPlayersList(s).length
     }));
 }
 
@@ -163,22 +179,6 @@ const getUserInfoInServerDisplayText = (user: string, server: OnlineServerItem):
     const text = infoText + serverUrl + '\n\n';
 
     return text;
-}
-
-/**
- * Get players list string array
- * @param server server item
- * @returns player list
- */
-const getCorrectPlayersList = (server: OnlineServerItem): string[] => {
-    if (!server.player) {
-        return [];
-    }
-
-    const playersArray = Array.isArray(server.player) ? server.player : [server.player];
-
-    // force to string array
-    return playersArray.map(p => p.toString());
 }
 
 /**

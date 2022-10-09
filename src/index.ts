@@ -19,7 +19,7 @@ const { Client, GatewayIntentBits, REST, SlashCommandBuilder, Routes } =
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`);
+    console.log(`Logged in as ${client?.user?.tag}!`);
 });
 
 client.login(env.DISCORD_TOKEN);
