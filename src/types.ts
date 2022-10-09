@@ -11,8 +11,8 @@ export interface ResServerItem {
     version: number;
     dedicated: number;
     mod: number,
-    // AAA, BBB
-    player: string[],
+    // [AAA, BBB] | AAA
+    player?: string[] | string,
     comment: string;
     url: string;
     max_players: number;

@@ -1,10 +1,16 @@
 import axios from 'axios';
 import { APIEmbed, Embed, EmbedBuilder, bold, quote, codeBlock, inlineCode } from 'discord.js';
 import { XMLParser } from 'fast-xml-parser';
+import { QUERY_USER_IN_SERVERS_LIMIT } from './constants';
 import { ResServerItem, Res, OnlineServerItem } from './types';
 
 const SERVER_API_URL = "http://rwr.runningwithrifles.com/rwr_server_list";
 
+/**
+ * Send Http Request, get server list xml raw string
+ * @param params query params
+ * @returns server list raw xml string
+ */
 const queryServersRaw = async (params: {
     start: number;
     size: number;
@@ -24,6 +30,11 @@ const queryServersRaw = async (params: {
     return res.data;
 }
 
+/**
+ * Parse xml raw string to server list
+ * @param resString server list raw xml string
+ * @returns parsed server list
+ */
 export const parseServerListFromString = (
     resString: string
 ): OnlineServerItem[] => {
@@ -36,12 +47,43 @@ export const parseServerListFromString = (
     }));
 }
 
+/**
+ * Get Joinable steam open url
+ * @param server serverItem
+ * @returns joinable steam open url
+ */
 export const getJoinServerUrl = (server: OnlineServerItem): string => {
     const str = `steam://rungameid/270150//server_address=${server.address}%20server_port=${server.port}`;
     return str;
 }
 
-export const queryAllServers = async (matchRegex: string): Promise<OnlineServerItem[]> => {
+/**
+ * Get formatted server display info text
+ * @param server serverItem
+ * @returns formatted server display info text
+ */
+export const getServerInfoDisplayText = (server: OnlineServerItem): string => {
+    const mapId = server.map_id;
+
+    const mapPathArr = mapId.split('/');
+
+    const mapName = mapPathArr[mapPathArr.length - 1];
+
+    const serverText = `${inlineCode(server.country)} ${bold(server.name)}: ${inlineCode(server.current_players + '/' + server.max_players)} (${mapName})\n`;
+
+    const serverUrl = getJoinServerUrl(server);
+
+    const text = serverText + serverUrl + '\n' + '\n';
+
+    return text;
+}
+
+/**
+ * Send Http request, get all server list with matchRegex filter
+ * @param matchRegex server name match regex
+ * @returns all server list
+ */
+export const queryAllServers = async (matchRegex?: string): Promise<OnlineServerItem[]> => {
     let start = 0;
     const size = 100;
 
@@ -59,61 +101,109 @@ export const queryAllServers = async (matchRegex: string): Promise<OnlineServerI
         totalServerList.push(...parseServerListFromString(resString));
     } while (parsedServerList.length === size);
 
-    const regex = new RegExp(matchRegex);
 
-    return totalServerList.filter(s => {
-        return regex.test(s.name);
-    });
+    if (matchRegex) {
+        const regex = new RegExp(matchRegex);
+
+        return totalServerList.filter(s => {
+            return regex.test(s.name);
+        });
+    }
+
+    return totalServerList;
 }
 
-export const getAllServerListDisplay = (servers: OnlineServerItem[]): string => {
+/**
+ * Get formatted combined sliced server display text
+ * @param servers all server list
+ * @param start start index, 0 is first item
+ * @param end end index, not included
+ * @returns formatted combined sliced server display text
+ */
+export const getSliceServerListDisplay = (servers: OnlineServerItem[], start: number, end: number): string => {
     let text = '';
-    servers.slice(0, 10).forEach(s => {
-        const mapId = s.map_id;
-
-        const mapPathArr = mapId.split('/');
-
-        const mapName = mapPathArr[mapPathArr.length - 1];
-
-        // const serverText = `${s.name}:${s.current_players}/${s.max_players} ${mapName}\n`;
-        const serverText = `${inlineCode(s.country)} ${bold(s.name)}: ${inlineCode(s.current_players + '/' + s.max_players)} ${mapName}\n`;
-
-        const serverUrl = getJoinServerUrl(s);
-
-        text += serverText + serverUrl + '\n' + '\n';
+    servers.slice(start, end).forEach(s => {
+        text += getServerInfoDisplayText(s);
     });
 
     return text;
 }
 
-export const getAllServerListEmbedDisplay = (servers: OnlineServerItem[]): APIEmbed[] => {
-    const builder = new EmbedBuilder();
-    builder.setColor(0x0099FF)
-        .setTitle('Here\'s top 10 servers');
+/**
+ * Get formatted all server list display text
+ * @param servers all server list
+ * @returns formatted server display text
+ */
+export const getAllServerListDisplay = (servers: OnlineServerItem[]): string => {
+    let text = '';
+    servers.forEach(s => {
+        text += getServerInfoDisplayText(s);
+    });
 
-    let description = '';
+    return text;
+}
 
-    servers.slice(0, 10).forEach(s => {
-        const mapId = s.map_id;
+/**
+ * Get formatted combined user & server info to display text
+ * @param user user name
+ * @param server server info
+ * @returns formatted display text
+ */
+const getUserInfoInServerDisplayText = (user: string, server: OnlineServerItem): string => {
+    const mapId = server.map_id;
 
-        const mapPathArr = mapId.split('/');
+    const mapPathArr = mapId.split('/');
 
-        const mapName = mapPathArr[mapPathArr.length - 1];
+    const mapName = mapPathArr[mapPathArr.length - 1];
 
-        // const serverText = `${s.name}:${s.current_players}/${s.max_players} ${mapName}\n`;
+    const serverUrl = getJoinServerUrl(server);
 
-        const serverUrl = getJoinServerUrl(s);
+    const infoText = `${inlineCode(user)} is in ${inlineCode(server.country)} ${bold(server.name)}: ${inlineCode(server.current_players + '/' + server.max_players)} (${mapName})\n`;
 
-        // description += serverText;
-        // description += serverUrl + '\n';
+    const text = infoText + serverUrl + '\n\n';
 
-        builder.addFields({
-            name: 'Server Item',
-            value: ''
+    return text;
+}
+
+/**
+ * Get players list string array
+ * @param server server item
+ * @returns player list
+ */
+const getCorrectPlayersList = (server: OnlineServerItem): string[] => {
+    if (!server.player) {
+        return [];
+    }
+
+    return Array.isArray(server.player) ? server.player : [server.player];
+}
+
+/**
+ * Get formatted user in server combined text
+ * @param user user name in rwr
+ * @param serverList all server list
+ * @returns formatted user in server combined text
+ */
+export const getUserInServerListDisplay = (user: string, serverList: OnlineServerItem[]): string => {
+    let text = '';
+
+    let totalCount = 0;
+
+    serverList.forEach(s => {
+        const playersList = getCorrectPlayersList(s);
+
+        playersList.forEach(player => {
+            if (totalCount === QUERY_USER_IN_SERVERS_LIMIT) {
+                return;
+            }
+            if (player.includes(user)) {
+                text += getUserInfoInServerDisplayText(player, s);
+                totalCount += 1;
+            }
         })
     });
 
-    builder.setDescription(description);
+    text += `Total ${totalCount} results.(limit to display ${QUERY_USER_IN_SERVERS_LIMIT} results.)`;
 
-    return [builder.toJSON()];
+    return text;
 }

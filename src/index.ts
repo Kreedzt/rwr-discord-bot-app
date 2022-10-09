@@ -1,6 +1,8 @@
 import * as dotenv from 'dotenv';
 import * as discord from 'discord.js';
-import { getAllServerListDisplay, getAllServerListEmbedDisplay, queryAllServers } from './utils';
+import { queryAllServers, getAllServerListDisplay, getSliceServerListDisplay, getUserInServerListDisplay } from './utils';
+import { RegisterCommand, QUERY_SERVERS_LIMIT, QUERY_USER_IN_SERVERS_LIMIT } from './constants';
+import { inlineCode } from 'discord.js';
 
 dotenv.config();
 const env = process.env as {
@@ -27,11 +29,22 @@ console.log('> Discord Bot started.');
 // commands
 const commands = [
     new SlashCommandBuilder()
-        .setName('ping')
+        .setName(RegisterCommand.PING)
         .setDescription('Replies with pong!'),
     new SlashCommandBuilder()
-        .setName('servers')
-        .setDescription('Replies with all server status!'),
+        .setName(RegisterCommand.SERVERS)
+        .setDescription(`Replies ${QUERY_SERVERS_LIMIT} server status, default is top ${QUERY_SERVERS_LIMIT} server`)
+        .addNumberOption(option =>
+            option.setName('start')
+                .setDescription('The start index, started with 0')
+                .setRequired(false)),
+    new SlashCommandBuilder()
+        .setName(RegisterCommand.USER)
+        .setDescription('Query user if exists in rwr server')
+        .addStringOption(option =>
+            option.setName('name')
+                .setDescription('Enter user name in the rwr game')
+                .setRequired(true))
 ].map((command) => command.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(env.DISCORD_TOKEN);
@@ -49,17 +62,48 @@ rest.put(Routes.applicationGuildCommands(env.APP_ID, env.GUILD_ID), {
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
 
-    if (interaction.commandName === 'ping') {
-        await interaction.reply('Pong!');
-    } else if (interaction.commandName === 'servers') {
-        const serverList = await queryAllServers(env.SERVER_MATCH_REGEX);
-        const text = getAllServerListDisplay(serverList);
-        let staticText = `Here's top 10 players count server list:\n`;
-        const totalText = staticText + text;
-        await interaction.reply({ content: totalText, ephemeral: true });
+    console.log('> interactionCreate receviced command', interaction.commandName, interaction.options.data);
 
-        // Embed
-        // const embedText = getAllServerListEmbedDisplay(serverList);
-        // await interaction.reply({ embeds: embedText, ephemeral: true });
+    switch (interaction.commandName as RegisterCommand) {
+        case RegisterCommand.PING: {
+            await interaction.reply('Pong!');
+            break;
+        }
+        case RegisterCommand.SERVERS: {
+            const serverList = await queryAllServers(env.SERVER_MATCH_REGEX);
+
+            const startIndex = interaction.options.getNumber('start', false) ?? 0;
+
+            const text = getSliceServerListDisplay(serverList, startIndex, startIndex + QUERY_SERVERS_LIMIT);
+            let staticText = '';
+
+            if (startIndex === 0) {
+                staticText = `Here's top ${QUERY_SERVERS_LIMIT} players count server list:\n`;
+            } else {
+                staticText = `Here's players count server list start index with ${startIndex}:\n`;
+            }
+
+            const totalText = staticText + text;
+            console.log('> replay servers command');
+            console.log(totalText);
+            await interaction.reply({ content: totalText, ephemeral: true });
+            break;
+        }
+        case RegisterCommand.USER: {
+            const serverList = await queryAllServers(env.SERVER_MATCH_REGEX);
+
+            const queryUserName = interaction.options.getString('name', true).toUpperCase();
+
+            const staticText = `Here's query ${inlineCode(queryUserName)} results:\n\n`;
+
+            const text = getUserInServerListDisplay(queryUserName, serverList);
+
+            const totalText = staticText + text;
+
+            console.log('> replay user command');
+            console.log(totalText);
+            await interaction.reply({ content: totalText, ephemeral: true });
+            break;
+        }
     }
 });
