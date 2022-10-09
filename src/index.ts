@@ -63,10 +63,6 @@ client.on('interactionCreate', async (interaction) => {
     console.log('> triggered by', interaction.user);
 
     switch (interaction.commandName as RegisterCommand) {
-        case RegisterCommand.PING: {
-            await interaction.reply('Pong!');
-            break;
-        }
         case RegisterCommand.SERVERS: {
             const serverList = await queryAllServers(env.SERVER_MATCH_REGEX);
 
