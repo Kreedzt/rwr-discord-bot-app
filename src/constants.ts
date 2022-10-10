@@ -1,6 +1,6 @@
 export enum RegisterCommand {
     SERVERS = 'servers',
-    USER = 'user',
+    WHERE_IS = 'whereis',
     STATS = 'stats'
 }
 

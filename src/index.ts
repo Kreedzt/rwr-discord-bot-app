@@ -39,8 +39,8 @@ const commands = [
                 .setDescription('The page number, start from 1')
                 .setRequired(false)),
     new SlashCommandBuilder()
-        .setName(RegisterCommand.USER)
-        .setDescription('Query user if exists in rwr server')
+        .setName(RegisterCommand.WHERE_IS)
+        .setDescription('Check which user playing server')
         .addStringOption(option =>
             option.setName('name')
                 .setDescription('Enter user name in the rwr game')
@@ -65,8 +65,8 @@ rest.put(Routes.applicationGuildCommands(env.APP_ID, env.GUILD_ID), {
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
 
-    logger.info('> interactionCreate receviced command', interaction.commandName, interaction.options.data);
-    logger.info('> triggered by', interaction.user);
+    logger.info('> interactionCreate receviced command:', interaction.commandName, interaction.options.data);
+    logger.info('> triggered by:', interaction.user);
 
     switch (interaction.commandName as RegisterCommand) {
         case RegisterCommand.SERVERS: {
@@ -90,9 +90,9 @@ client.on('interactionCreate', async (interaction) => {
             }
 
             if (count === 0) {
-                const nothingText = titleText + '\n No more servers.';
+                const nothingText = titleText + '\n No more results.';
 
-                logger.info('> replay servers command');
+                logger.info(`> replay ${RegisterCommand.SERVERS} command:`);
                 logger.info(nothingText);
                 await interaction.reply({ content: nothingText, ephemeral: true });
                 return;
@@ -101,12 +101,12 @@ client.on('interactionCreate', async (interaction) => {
             const footerText = `Total ${inlineCode(serverList.length.toString())} server(s), current: ${inlineCode((startIndex + 1).toString())} - ${inlineCode((startIndex + count).toString())}`;
 
             const totalText = titleText + text + footerText;
-            logger.info('> replay servers command');
+            logger.info(`> replay ${RegisterCommand.SERVERS} command:`);
             logger.info(totalText);
             await interaction.reply({ content: totalText, ephemeral: true });
             break;
         }
-        case RegisterCommand.USER: {
+        case RegisterCommand.WHERE_IS: {
             const serverList = await queryAllServers(env.SERVER_MATCH_REGEX);
 
             const queryUserName = interaction.options.getString('name', true).toUpperCase();
@@ -116,9 +116,9 @@ client.on('interactionCreate', async (interaction) => {
             const { text, count } = getUserInServerListDisplay(queryUserName, serverList);
 
             if (count === 0) {
-                const nothingText = titleText + '\n No more users.';
+                const nothingText = titleText + '\n No more results.';
 
-                logger.info('> replay user command');
+                logger.info(`> replay ${RegisterCommand.WHERE_IS} command:`);
                 logger.info(nothingText);
                 await interaction.reply({ content: nothingText, ephemeral: true });
                 return;
@@ -128,7 +128,7 @@ client.on('interactionCreate', async (interaction) => {
 
             const totalText = titleText + text + footerText;
 
-            logger.info('> replay user command');
+            logger.info(`> replay ${RegisterCommand.WHERE_IS} command:`);
             logger.info(totalText);
             await interaction.reply({ content: totalText, ephemeral: true });
             break;
@@ -140,7 +140,7 @@ client.on('interactionCreate', async (interaction) => {
 
             const totalText = text;
 
-            logger.info('> replay stats command');
+            logger.info(`> replay ${RegisterCommand.STATS} command`);
             logger.info(totalText);
             await interaction.reply({ content: totalText, ephemeral: true });
             break;
