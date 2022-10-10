@@ -4,6 +4,7 @@
 tmp/
 .env
 dist/
+logs/
 
 *.tern-port
 node_modules/
