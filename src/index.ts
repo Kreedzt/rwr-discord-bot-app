@@ -1,9 +1,11 @@
 import * as dotenv from 'dotenv';
 import * as discord from 'discord.js';
+import { inlineCode } from 'discord.js';
 import { queryAllServers, getAllServerListDisplay, getSliceServerListDisplay, getUserInServerListDisplay, getAllServerStatisticsDisplay } from './utils';
 import { RegisterCommand, QUERY_SERVERS_LIMIT, QUERY_USER_IN_SERVERS_LIMIT } from './constants';
-import { inlineCode } from 'discord.js';
+import { logger } from './logger';
 
+// env
 dotenv.config();
 const env = process.env as {
     APP_ID: string;
@@ -13,18 +15,19 @@ const env = process.env as {
     SERVER_MATCH_REGEX: string
 };
 
+// Client instance
 const { Client, GatewayIntentBits, REST, SlashCommandBuilder, Routes } =
     discord;
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.on('ready', () => {
-    console.log(`Logged in as ${client?.user?.tag}!`);
+    logger.info(`Logged in as ${client?.user?.tag}!`);
 });
 
 client.login(env.DISCORD_TOKEN);
 
-console.log('> Discord Bot started.');
+logger.info('> Discord Bot started.');
 
 // commands
 const commands = [
@@ -53,7 +56,7 @@ rest.put(Routes.applicationGuildCommands(env.APP_ID, env.GUILD_ID), {
     body: commands,
 })
     .then((data: any) =>
-        console.log(
+        logger.info(
             `Successfully registered ${data.length} application commands.`
         )
     )
@@ -62,8 +65,8 @@ rest.put(Routes.applicationGuildCommands(env.APP_ID, env.GUILD_ID), {
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
 
-    console.log('> interactionCreate receviced command', interaction.commandName, interaction.options.data);
-    console.log('> triggered by', interaction.user);
+    logger.info('> interactionCreate receviced command', interaction.commandName, interaction.options.data);
+    logger.info('> triggered by', interaction.user);
 
     switch (interaction.commandName as RegisterCommand) {
         case RegisterCommand.SERVERS: {
@@ -83,14 +86,14 @@ client.on('interactionCreate', async (interaction) => {
             if (startIndex === 0) {
                 titleText = `Here's top ${QUERY_SERVERS_LIMIT} players count server list:\n`;
             } else {
-                titleText = `Here's players count server list top ${startIndex}-${endIndex}:\n`;
+                titleText = `Here's players count server list top ${startIndex + 1}-${endIndex}:\n`;
             }
 
             if (count === 0) {
                 const nothingText = titleText + '\n No more servers.';
 
-                console.log('> replay servers command');
-                console.log(nothingText);
+                logger.info('> replay servers command');
+                logger.info(nothingText);
                 await interaction.reply({ content: nothingText, ephemeral: true });
                 return;
             }
@@ -98,8 +101,8 @@ client.on('interactionCreate', async (interaction) => {
             const footerText = `Total ${inlineCode(serverList.length.toString())} server(s), current: ${inlineCode((startIndex + 1).toString())} - ${inlineCode((startIndex + count).toString())}`;
 
             const totalText = titleText + text + footerText;
-            console.log('> replay servers command');
-            console.log(totalText);
+            logger.info('> replay servers command');
+            logger.info(totalText);
             await interaction.reply({ content: totalText, ephemeral: true });
             break;
         }
@@ -115,8 +118,8 @@ client.on('interactionCreate', async (interaction) => {
             if (count === 0) {
                 const nothingText = titleText + '\n No more users.';
 
-                console.log('> replay user command');
-                console.log(nothingText);
+                logger.info('> replay user command');
+                logger.info(nothingText);
                 await interaction.reply({ content: nothingText, ephemeral: true });
                 return;
             }
@@ -125,8 +128,8 @@ client.on('interactionCreate', async (interaction) => {
 
             const totalText = titleText + text + footerText;
 
-            console.log('> replay user command');
-            console.log(totalText);
+            logger.info('> replay user command');
+            logger.info(totalText);
             await interaction.reply({ content: totalText, ephemeral: true });
             break;
         }
@@ -137,8 +140,8 @@ client.on('interactionCreate', async (interaction) => {
 
             const totalText = text;
 
-            console.log('> replay stats command');
-            console.log(totalText);
+            logger.info('> replay stats command');
+            logger.info(totalText);
             await interaction.reply({ content: totalText, ephemeral: true });
             break;
         }

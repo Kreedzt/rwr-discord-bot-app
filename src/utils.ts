@@ -3,6 +3,7 @@ import { APIEmbed, Embed, EmbedBuilder, bold, quote, codeBlock, inlineCode } fro
 import { XMLParser } from 'fast-xml-parser';
 import { QUERY_USER_IN_SERVERS_LIMIT } from './constants';
 import { ResServerItem, Res, OnlineServerItem } from './types';
+import { logger } from './logger';
 
 const SERVER_API_URL = "http://rwr.runningwithrifles.com/rwr_server_list";
 
@@ -107,23 +108,28 @@ export const queryAllServers = async (matchRegex?: string): Promise<OnlineServer
 
     let parsedServerList: OnlineServerItem[] = [];
 
-    do {
-        const resString = await queryServersRaw({
-            start,
-            size,
-            names: 1
-        });
-
-        totalServerList.push(...parseServerListFromString(resString));
-    } while (parsedServerList.length === size);
-
-
-    if (matchRegex) {
-        const regex = new RegExp(matchRegex);
-
-        return totalServerList.filter(s => {
-            return regex.test(s.name);
-        });
+    try {
+        do {
+            const resString = await queryServersRaw({
+                start,
+                size,
+                names: 1
+            });
+    
+            totalServerList.push(...parseServerListFromString(resString));
+        } while (parsedServerList.length === size);
+    
+    
+        if (matchRegex) {
+            const regex = new RegExp(matchRegex);
+    
+            return totalServerList.filter(s => {
+                return regex.test(s.name);
+            });
+        }
+    } catch (error) {
+        logger.error('> queryAllServers error');
+        logger.error(error);
     }
 
     return totalServerList;
