@@ -1,5 +1,7 @@
 import type { ChatInputCommandInteraction, Interaction, RESTPostAPIApplicationCommandsJSONBody, SlashCommandBuilder } from "discord.js";
 
+export type Nullable<T> = T | null | undefined;
+
 export interface GlobalEnv {
     APP_ID: string;
     GUILD_ID: string;

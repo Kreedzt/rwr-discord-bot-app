@@ -2,7 +2,7 @@ import axios from 'axios';
 import { APIEmbed, Embed, EmbedBuilder, bold, quote, codeBlock, inlineCode } from 'discord.js';
 import { XMLParser } from 'fast-xml-parser';
 import { QUERY_USER_IN_SERVERS_LIMIT } from './constants';
-import { ResServerItem, Res, OnlineServerItem } from './types';
+import { ResServerItem, Res, OnlineServerItem, Nullable } from './types';
 import { logger } from './logger';
 
 const SERVER_API_URL = "http://rwr.runningwithrifles.com/rwr_server_list";
@@ -138,17 +138,29 @@ export const queryAllServers = async (matchRegex?: string): Promise<OnlineServer
 /**
  * Get formatted combined sliced server display text
  * @param servers all server list
- * @param start start index, 0 is first item
- * @param end end index, not included
+ * @param params query params
  * @returns formatted combined sliced server display text
  */
-export const getSliceServerListDisplay = (servers: OnlineServerItem[], start: number, end: number): {
+export const getSliceServerListDisplay = (servers: OnlineServerItem[], params: {
+    start: number;
+    end: number;
+    country: Nullable<string>;
+}): {
     text: string;
     count: number;
 } => {
+    const { start, end, country } = params;
+
     let text = '';
     let count = 0;
-    servers.slice(start, end).forEach(s => {
+    servers.filter(s => {
+        if (country) {
+            const inputCountry = country.toUpperCase();
+            return s.country.toLocaleUpperCase().includes(inputCountry);
+        }
+
+        return true;
+    }).slice(start, end).forEach(s => {
         ++count;
         text += getServerInfoDisplayText(s);
     });

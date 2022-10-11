@@ -6,6 +6,7 @@ import { getSliceServerListDisplay, queryAllServers } from "../utils";
 
 const SERVERS_COMMAND_NAME = 'servers';
 const SERVERS_COMMAND_PAGE_PARAM_NAME = 'page';
+const SERVERS_COMMAND_COUNTRY_PARAM_NAME = 'country';
 
 export const ServersCommandRegister: ICommandRegister = {
     name: SERVERS_COMMAND_NAME,
@@ -15,25 +16,57 @@ export const ServersCommandRegister: ICommandRegister = {
         .addNumberOption(option =>
             option.setName(SERVERS_COMMAND_PAGE_PARAM_NAME)
                 .setDescription('The page number, start from 1')
-                .setRequired(false)).toJSON(),
+                .setRequired(false))
+        .addStringOption(option =>
+            option.setName(SERVERS_COMMAND_COUNTRY_PARAM_NAME)
+                .setDescription('Filter by country')
+                .setRequired(false))
+        .toJSON(),
     resolve: async (interaction, env) => {
         const serverList = await queryAllServers(env.SERVER_MATCH_REGEX);
 
         const inputPageNum = interaction.options.getNumber(SERVERS_COMMAND_PAGE_PARAM_NAME, false);
+        const inputCountry = interaction.options.getString(SERVERS_COMMAND_COUNTRY_PARAM_NAME, false);
 
         const pageNum = inputPageNum ? inputPageNum - 1 : 0;
 
         const startIndex = pageNum * QUERY_SERVERS_LIMIT;
         const endIndex = startIndex + QUERY_SERVERS_LIMIT;
 
-        const { text, count } = getSliceServerListDisplay(serverList, startIndex, endIndex);
+        const { text, count } = getSliceServerListDisplay(serverList, {
+            start: startIndex,
+            end: endIndex,
+            country: inputCountry
+        });
 
         let titleText = '';
 
+        // Concat Query string format
+        const queryTextArr: string[] = [];
+
+        if (inputPageNum) {
+            queryTextArr.push(`Page: ${inputPageNum}`);
+        }
+
+        if (inputCountry) {
+            queryTextArr.push(`Country: ${inputCountry}`);
+        }
+
+        const queryText = queryTextArr.length > 0 ? `(${queryTextArr.join(' & ')})` : '';
+        const hasQuery = queryTextArr.length > 0;
+
         if (startIndex === 0) {
-            titleText = `Here's top ${QUERY_SERVERS_LIMIT} players count server list:\n`;
+            if (hasQuery) {
+                titleText = `Here's query${queryText} result top 10 server list:\n`;
+            } else {
+                titleText = `Here's top ${QUERY_SERVERS_LIMIT} players count server list:\n`;
+            }
         } else {
-            titleText = `Here's players count server list top ${startIndex + 1}-${endIndex}:\n`;
+            if (hasQuery) {
+                titleText = `Here's query${queryText} result top ${startIndex + 1}-${endIndex} server list:\n`;
+            } else {
+                titleText = `Here's players count server list top ${startIndex + 1}-${endIndex}:\n`;
+            }
         }
 
         if (count === 0) {
