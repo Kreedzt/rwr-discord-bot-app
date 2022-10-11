@@ -2,7 +2,7 @@ import { inlineCode, SlashCommandBuilder } from "discord.js";
 import { QUERY_SERVERS_LIMIT, RegisterCommand } from "../constants";
 import { logger } from "../logger";
 import { ICommandRegister } from "../types";
-import { getSliceServerListDisplay, queryAllServers } from "../utils";
+import { getQueryFilterServerList, getSliceServerListDisplay, queryAllServers } from "../utils";
 
 const SERVERS_COMMAND_NAME = 'servers';
 const SERVERS_COMMAND_PAGE_PARAM_NAME = 'page';
@@ -33,10 +33,13 @@ export const ServersCommandRegister: ICommandRegister = {
         const startIndex = pageNum * QUERY_SERVERS_LIMIT;
         const endIndex = startIndex + QUERY_SERVERS_LIMIT;
 
-        const { text, count } = getSliceServerListDisplay(serverList, {
+        const filteredTotal = getQueryFilterServerList(serverList, {
+            country: inputCountry
+        });
+
+        const { text, count } = getSliceServerListDisplay(filteredTotal, {
             start: startIndex,
             end: endIndex,
-            country: inputCountry
         });
 
         let titleText = '';
@@ -78,7 +81,7 @@ export const ServersCommandRegister: ICommandRegister = {
             return;
         }
 
-        const footerText = `Total ${inlineCode(serverList.length.toString())} server(s), current: ${inlineCode((startIndex + 1).toString())} - ${inlineCode((startIndex + count).toString())}`;
+        const footerText = `Total ${inlineCode(filteredTotal.length.toString())} server(s), current: ${inlineCode((startIndex + 1).toString())} - ${inlineCode((startIndex + count).toString())}`;
 
         const totalText = titleText + text + footerText;
         logger.info(`> replay ${RegisterCommand.SERVERS} command:`);

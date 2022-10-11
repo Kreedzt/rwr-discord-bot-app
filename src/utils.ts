@@ -136,31 +136,44 @@ export const queryAllServers = async (matchRegex?: string): Promise<OnlineServer
 }
 
 /**
- * Get formatted combined sliced server display text
+ * Get match query params server text
  * @param servers all server list
  * @param params query params
- * @returns formatted combined sliced server display text
+ * @returns match query params server list
  */
-export const getSliceServerListDisplay = (servers: OnlineServerItem[], params: {
-    start: number;
-    end: number;
-    country: Nullable<string>;
-}): {
-    text: string;
-    count: number;
-} => {
-    const { start, end, country } = params;
+export const getQueryFilterServerList = (servers: OnlineServerItem[], params: {
+    country: Nullable<string>
+}): OnlineServerItem[] => {
+    const { country } = params;
 
-    let text = '';
-    let count = 0;
-    servers.filter(s => {
+    return servers.filter(s => {
         if (country) {
             const inputCountry = country.toUpperCase();
             return s.country.toLocaleUpperCase().includes(inputCountry);
         }
 
         return true;
-    }).slice(start, end).forEach(s => {
+    });
+}
+
+/**
+ * Get formatted combined sliced server display text
+ * @param servers all server list
+ * @param params page params
+ * @returns formatted combined sliced server display text
+ */
+export const getSliceServerListDisplay = (servers: OnlineServerItem[], params: {
+    start: number;
+    end: number;
+}): {
+    text: string;
+    count: number;
+} => {
+    const { start, end } = params;
+
+    let text = '';
+    let count = 0;
+    servers.slice(start, end).forEach(s => {
         ++count;
         text += getServerInfoDisplayText(s);
     });
