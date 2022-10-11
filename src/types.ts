@@ -16,7 +16,7 @@ export interface ResServerItem {
     map_name: string;
     bots: number;
     country: string;
-    current_players: string;
+    current_players: number;
     timeStamp: number;
     version: number;
     dedicated: number;

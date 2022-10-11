@@ -246,9 +246,7 @@ export const getAllServerStatisticsDisplay = (serverList: OnlineServerItem[]): s
     serverList.forEach(s => {
        capacityCount += s.max_players;
 
-       const playersArr = getCorrectPlayersList(s);
-
-       playersCount += playersArr.length;
+       playersCount += s.current_players;
     });
 
     const serversCountText = `Total ${bold(serversCount.toString())} server(s) online\n\n`;
