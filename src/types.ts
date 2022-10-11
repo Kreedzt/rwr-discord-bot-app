@@ -1,3 +1,13 @@
+import type { ChatInputCommandInteraction, Interaction, RESTPostAPIApplicationCommandsJSONBody, SlashCommandBuilder } from "discord.js";
+
+export interface GlobalEnv {
+    APP_ID: string;
+    GUILD_ID: string;
+    DISCORD_TOKEN: string;
+    PUBLIC_KEY: string;
+    SERVER_MATCH_REGEX: string
+}
+
 export interface ResServerItem {
     name: string;
     address: string;
@@ -28,4 +38,10 @@ export interface Res {
 
 export interface OnlineServerItem extends ResServerItem {
     playersCount: number;
+}
+
+export interface ICommandRegister {
+    name: string;
+    builderRes: RESTPostAPIApplicationCommandsJSONBody;
+    resolve: (interaction: ChatInputCommandInteraction, env: GlobalEnv) => Promise<void>;
 }
