@@ -18,7 +18,7 @@ export const WhereisCommandRegister: ICommandRegister = {
     resolve: async (interaction, env) => {
         const serverList = await queryAllServers(env.SERVER_MATCH_REGEX);
 
-        const queryUserName = interaction.options.getString('name', true).toUpperCase();
+        const queryUserName = interaction.options.getString('name', true);
 
         const titleText = `Here's query ${inlineCode(queryUserName)} results:\n\n`;
 
