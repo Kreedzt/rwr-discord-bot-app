@@ -12,7 +12,7 @@ export const ServersCommandRegister: ICommandRegister = {
     name: SERVERS_COMMAND_NAME,
     builderRes: new SlashCommandBuilder()
         .setName(SERVERS_COMMAND_NAME)
-        .setDescription(`Replies ${QUERY_SERVERS_LIMIT} server status, default is top ${QUERY_SERVERS_LIMIT} server`)
+        .setDescription(`Replies ${QUERY_SERVERS_LIMIT} server status, default is top ${QUERY_SERVERS_LIMIT} servers`)
         .addNumberOption(option =>
             option.setName(SERVERS_COMMAND_PAGE_PARAM_NAME)
                 .setDescription('The page number, start from 1')
