@@ -10,10 +10,10 @@ export const WhereisCommandRegister: ICommandRegister = {
     name: WHEREIS_COMMAND_NAME,
     builderRes: new SlashCommandBuilder()
         .setName(WHEREIS_COMMAND_NAME)
-        .setDescription('Check which user playing server')
+        .setDescription('Check which user playing server. Case Sensitivity')
         .addStringOption(option =>
             option.setName('name')
-                .setDescription('Enter user name in the rwr game')
+                .setDescription('Enter user name in the rwr game. Case Sensitivity')
                 .setRequired(true)).toJSON(),
     resolve: async (interaction, env) => {
         const serverList = await queryAllServers(env.SERVER_MATCH_REGEX);
