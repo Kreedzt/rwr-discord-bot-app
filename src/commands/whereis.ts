@@ -17,7 +17,7 @@ export const WhereisCommandRegister: ICommandRegister = {
                 .setRequired(true))
         .addBooleanOption(option =>
             option.setName('case_sensitivity')
-                .setDescription('Enable case sensitivity search.')
+                .setDescription('Enable case sensitivity search, default: False')
         ).toJSON(),
     resolve: async (interaction, env) => {
         const serverList = await queryAllServers(env.SERVER_MATCH_REGEX);
@@ -25,7 +25,9 @@ export const WhereisCommandRegister: ICommandRegister = {
         const queryUserName = interaction.options.getString('name', true);
         const isCaseSensitivity = interaction.options.getBoolean('case_sensitivity', false);
 
-        const titleText = `Here's query ${inlineCode(queryUserName)} results:\n\n`;
+        const optionParseText = isCaseSensitivity ? '(Case sensivity enabled)' : '';
+
+        const titleText = `Here's query ${inlineCode(queryUserName)}${optionParseText} results:\n\n`;
 
         const { text, count } = getUserInServerListDisplay(queryUserName, serverList, {
             isCaseSensitivity
