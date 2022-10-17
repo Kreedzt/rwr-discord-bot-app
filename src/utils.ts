@@ -199,6 +199,15 @@ export const getAllServerListDisplay = (servers: OnlineServerItem[]): string => 
 }
 
 /**
+ * Encode player to display correct
+ * @param user player name
+ * @returns correct display format
+ */
+export const encodePlayerName = (user: string): string => {
+    return `\`\`${user}\`\``;
+}
+
+/**
  * Get formatted combined user & server info to display text
  * @param user user name
  * @param server server info
@@ -213,7 +222,7 @@ const getUserInfoInServerDisplayText = (user: string, server: OnlineServerItem):
 
     const serverUrl = getJoinServerUrl(server);
 
-    const infoText = `${inlineCode(user)} is in ${inlineCode(server.country)} ${bold(server.name)}: ${inlineCode(server.current_players + '/' + server.max_players)} (${mapName})\n`;
+    const infoText = `${encodePlayerName(user)} is in ${inlineCode(server.country)} ${bold(server.name)}: ${inlineCode(server.current_players + '/' + server.max_players)} (${mapName})\n`;
 
     const text = infoText + serverUrl + '\n\n';
 
@@ -295,6 +304,12 @@ export const getAllServerStatisticsDisplay = (serverList: OnlineServerItem[]): s
     return text;
 }
 
+/**
+ * Get map id formatted text
+ * @param mapId map id
+ * @param index pos
+ * @returns formatted text
+ */
 export const getMapInfoDisplay = (mapId: string, index: number): string => {
     let text = '';
 
@@ -303,6 +318,11 @@ export const getMapInfoDisplay = (mapId: string, index: number): string => {
     return text;
 }
 
+/**
+ * Get all map formatted info
+ * @param mapindexArr map index array
+ * @returns formatted info
+ */
 export const getAllMapIndexDisplay = (mapindexArr: string[]): {
     count: number;
     text: string;
