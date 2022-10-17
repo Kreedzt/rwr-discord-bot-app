@@ -8,6 +8,7 @@ export interface GlobalEnv {
     DISCORD_TOKEN: string;
     PUBLIC_KEY: string;
     SERVER_MATCH_REGEX: string
+    MAP_INDEX: string[];
 }
 
 export interface ResServerItem {

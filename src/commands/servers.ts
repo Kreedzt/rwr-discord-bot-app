@@ -1,5 +1,5 @@
 import { inlineCode, SlashCommandBuilder } from "discord.js";
-import { QUERY_SERVERS_LIMIT, RegisterCommand } from "../constants";
+import { QUERY_SERVERS_LIMIT } from "../constants";
 import { logger } from "../logger";
 import { ICommandRegister } from "../types";
 import { getQueryFilterServerList, getSliceServerListDisplay, queryAllServers } from "../utils";
@@ -75,7 +75,7 @@ export const ServersCommandRegister: ICommandRegister = {
         if (count === 0) {
             const nothingText = titleText + '\n No more results.';
 
-            logger.info(`> replay ${RegisterCommand.SERVERS} command:`);
+            logger.info(`> replay ${SERVERS_COMMAND_NAME} command:`);
             logger.info(nothingText);
             await interaction.reply({ content: nothingText, ephemeral: true });
             return;
@@ -84,7 +84,7 @@ export const ServersCommandRegister: ICommandRegister = {
         const footerText = `Total ${inlineCode(filteredTotal.length.toString())} server(s), current: ${inlineCode((startIndex + 1).toString())} - ${inlineCode((startIndex + count).toString())}`;
 
         const totalText = titleText + text + footerText;
-        logger.info(`> replay ${RegisterCommand.SERVERS} command:`);
+        logger.info(`> replay ${SERVERS_COMMAND_NAME} command:`);
         logger.info(totalText);
         await interaction.reply({ content: totalText, ephemeral: true });
     }

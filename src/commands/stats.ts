@@ -1,5 +1,4 @@
 import { SlashCommandBuilder } from "discord.js";
-import { RegisterCommand } from "../constants";
 import { logger } from "../logger";
 import { ICommandRegister } from "../types";
 import { getAllServerStatisticsDisplay, queryAllServers } from "../utils";
@@ -19,7 +18,7 @@ export const StatsCommandRegister: ICommandRegister = {
 
         const totalText = text;
 
-        logger.info(`> replay ${RegisterCommand.STATS} command`);
+        logger.info(`> replay ${STATS_COMMAND_NAME} command`);
         logger.info(totalText);
         await interaction.reply({ content: totalText, ephemeral: true });
     }

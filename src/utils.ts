@@ -226,7 +226,9 @@ const getUserInfoInServerDisplayText = (user: string, server: OnlineServerItem):
  * @param serverList all server list
  * @returns formatted user in server combined text
  */
-export const getUserInServerListDisplay = (user: string, serverList: OnlineServerItem[]): {
+export const getUserInServerListDisplay = (user: string, serverList: OnlineServerItem[], options: {
+    isCaseSensitivity?: Nullable<boolean>;
+}): {
     text: string;
     count: number;
 } => {
@@ -234,11 +236,19 @@ export const getUserInServerListDisplay = (user: string, serverList: OnlineServe
 
     let count = 0;
 
+    const { isCaseSensitivity } = options;
+
     serverList.forEach(s => {
         const playersList = getCorrectPlayersList(s);
 
         playersList.forEach(player => {
-            if (player.includes(user)) {
+            let current = player;
+            let target = user;
+            if (!isCaseSensitivity) {
+                current = current.toLocaleUpperCase();
+                target = target.toLocaleUpperCase();
+            } 
+            if (current.includes(target)) {
                 count += 1;
 
                 if (count >= QUERY_USER_IN_SERVERS_LIMIT) {
@@ -283,4 +293,28 @@ export const getAllServerStatisticsDisplay = (serverList: OnlineServerItem[]): s
     text += playersCountText;
 
     return text;
+}
+
+export const getMapInfoDisplay = (mapId: string, index: number): string => {
+    let text = '';
+
+    text += `${index}. ${mapId}\n`;
+
+    return text;
+}
+
+export const getAllMapIndexDisplay = (mapindexArr: string[]): {
+    count: number;
+    text: string;
+} => {
+    let text = '';
+
+    mapindexArr.forEach((map, index) => {
+        text += getMapInfoDisplay(map, index + 1);
+    });
+
+    return {
+        count: mapindexArr.length,
+        text
+    };
 }
