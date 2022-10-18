@@ -396,7 +396,15 @@ export const getTdollFormattedText = (tdoll: TDollDBItem): string => {
 
     const stars = `${tdoll.star} * :star:`;
 
-    text += `No.${tdoll.id} ${inlineCode(tdoll.name)} [${tdoll.class}] (${stars}) ${hyperlink('Detail', getTdollInfoUrl(tdoll))} \n`;
+    text += `No.${tdoll.id}`;
+
+    text += ` ${inlineCode(tdoll.name)} `;
+
+    text += ` [${tdoll.class}] `;
+
+    text += ` (${stars}) \n`;
+
+    text += getTdollInfoUrl(tdoll);
 
     return text;
 }
@@ -423,7 +431,7 @@ export const getAllTdollsInDB = (dbData: TDollDBItem[], options: {
         if (!id && !name) {
             ++count;
             if (count <= QUERY_TDOLL_LIMIT) {
-                text += `${count}. ${getTdollFormattedText(data)}`;
+                text += `${count}. ${getTdollFormattedText(data)}\n`;
             }
             return;
         }
@@ -432,12 +440,12 @@ export const getAllTdollsInDB = (dbData: TDollDBItem[], options: {
             ++count;
 
             if (count <= QUERY_TDOLL_LIMIT) {
-                text += `${count}. ${getTdollFormattedText(data)}`;
+                text += `${count}. ${getTdollFormattedText(data)}\n`;
             }
         } else if (name && data.name.toLocaleUpperCase().includes(name.toLocaleUpperCase())) {
             ++count;
             if (count <= QUERY_TDOLL_LIMIT) {
-                text += `${count}. ${getTdollFormattedText(data)}`;
+                text += `${count}. ${getTdollFormattedText(data)}\n`;
             }        
         }
     });
