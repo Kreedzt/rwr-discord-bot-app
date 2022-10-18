@@ -9,6 +9,7 @@ export interface GlobalEnv {
     PUBLIC_KEY: string;
     SERVER_MATCH_REGEX: string
     MAP_INDEX: string[];
+    TDOLL_DB: string;
 }
 
 export interface ResServerItem {
@@ -47,4 +48,11 @@ export interface ICommandRegister {
     name: string;
     builderRes: RESTPostAPIApplicationCommandsJSONBody;
     resolve: (interaction: ChatInputCommandInteraction, env: GlobalEnv) => Promise<void>;
+}
+
+export interface TDollDBItem {
+    name: string;
+    id: number;
+    class: string;
+    star: number;
 }

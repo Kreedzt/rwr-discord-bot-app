@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { APIEmbed, Embed, EmbedBuilder, bold, quote, codeBlock, inlineCode } from 'discord.js';
+import { APIEmbed, Embed, EmbedBuilder, bold, quote, codeBlock, inlineCode, hyperlink } from 'discord.js';
 import { XMLParser } from 'fast-xml-parser';
-import { QUERY_USER_IN_SERVERS_LIMIT } from './constants';
-import { ResServerItem, Res, OnlineServerItem, Nullable } from './types';
+import * as fs from 'fs';
+import { QUERY_TDOLL_LIMIT, QUERY_USER_IN_SERVERS_LIMIT } from './constants';
+import { ResServerItem, Res, OnlineServerItem, Nullable, TDollDBItem } from './types';
 import { logger } from './logger';
 
 const SERVER_API_URL = "http://rwr.runningwithrifles.com/rwr_server_list";
@@ -115,14 +116,14 @@ export const queryAllServers = async (matchRegex?: string): Promise<OnlineServer
                 size,
                 names: 1
             });
-    
+
             totalServerList.push(...parseServerListFromString(resString));
         } while (parsedServerList.length === size);
-    
-    
+
+
         if (matchRegex) {
             const regex = new RegExp(matchRegex);
-    
+
             return totalServerList.filter(s => {
                 return regex.test(s.name);
             });
@@ -256,7 +257,7 @@ export const getUserInServerListDisplay = (user: string, serverList: OnlineServe
             if (!isCaseSensitivity) {
                 current = current.toLocaleUpperCase();
                 target = target.toLocaleUpperCase();
-            } 
+            }
             if (current.includes(target)) {
                 count += 1;
 
@@ -288,9 +289,9 @@ export const getAllServerStatisticsDisplay = (serverList: OnlineServerItem[]): s
     let playersCount = 0;
 
     serverList.forEach(s => {
-       capacityCount += s.max_players;
+        capacityCount += s.max_players;
 
-       playersCount += s.current_players;
+        playersCount += s.current_players;
     });
 
     const serversCountText = `Total ${bold(serversCount.toString())} server(s) online\n\n`;
@@ -337,4 +338,109 @@ export const getAllMapIndexDisplay = (mapindexArr: string[]): {
         count: mapindexArr.length,
         text
     };
+}
+
+/**
+ * Get tdoll db data by file path
+ * @param filePath db file path
+ */
+export const getTDollDBContent = (filePath: string): TDollDBItem[] => {
+    const file = fs.readFileSync(filePath, 'utf-8');
+    const content = JSON.parse(file) as TDollDBItem[];
+    return content;
+}
+
+/**
+ * Get sturcture map of tdoll db data
+ * @param tdollData Source tdoll db data
+ * @returns structure map
+ */
+export const generateTdollDBCache = (tdollData: TDollDBItem[]): {
+    idMap: Map<number, TDollDBItem>;
+    nameMap: Map<string, TDollDBItem>;
+} => {
+    const idMap = new Map<number, TDollDBItem>();
+    const nameMap = new Map<string, TDollDBItem>();
+
+    tdollData.forEach(data => {
+        idMap.set(data.id, data);
+        nameMap.set(data.name, data);
+    })
+
+    return {
+        idMap,
+        nameMap
+    }
+};
+
+/**
+ * Get tdoll detail url
+ * @param tdoll tdoll info
+ * @returns detail url
+ */
+export const getTdollInfoUrl = (tdoll: TDollDBItem): string => {
+    const rawName = tdoll.name;
+
+    const encodeName = rawName.replace(/\s/g, '_');
+
+    return `https://iopwiki.com/wiki/${encodeURIComponent(encodeName)}`;
+}
+
+/**
+ * Get tdoll info formatted text
+ * @param tdoll tdoll info
+ * @returns formatted text
+ */
+export const getTdollFormattedText = (tdoll: TDollDBItem): string => {
+    let text = '';
+
+    const stars = `${tdoll.star} * :star:`;
+
+    text += `No.${tdoll.id} ${inlineCode(tdoll.name)} [${tdoll.class}] (${stars}) ${hyperlink('Detail', getTdollInfoUrl(tdoll))} \n`;
+
+    return text;
+}
+
+/**
+ * Get formatted tdoll info by user query
+ * @param dbData tdoll db
+ * @param options query options
+ * @returns formatted text & count
+ */
+export const getAllTdollsInDB = (dbData: TDollDBItem[], options: {
+    id: Nullable<number>;
+    name: Nullable<string>;
+}): {
+    text: string;
+    count: number;
+} => {
+    let text = '';
+    let count = 0;
+
+    const { id, name } = options;
+
+    dbData.forEach(data => {
+        if (!id && !name) {
+            ++count;
+            if (count < QUERY_TDOLL_LIMIT) {
+                text += `${count}. ${getTdollFormattedText(data)}`;
+            }
+            return;
+        }
+
+        if (id && id === data.id) {
+            ++count;
+
+            if (count < QUERY_TDOLL_LIMIT) {
+                text += `${count}. ${getTdollFormattedText(data)}`;
+            }
+        } else if (name && data.name.toLocaleUpperCase().includes(name.toLocaleUpperCase())) {
+            ++count;
+            if (count < QUERY_TDOLL_LIMIT) {
+                text += `${count}. ${getTdollFormattedText(data)}`;
+            }        
+        }
+    });
+
+    return { text, count };
 }

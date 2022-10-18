@@ -2,10 +2,12 @@
 .idea
 *.log
 tmp/
+temp/
 .env
 dist/
 logs/
 
+.vscode/
 *.tern-port
 node_modules/
 npm-debug.log*
@@ -14,3 +16,6 @@ yarn-error.log*
 *.tsbuildinfo
 .npm
 .eslintcache
+
+# db
+tdoll_db.json

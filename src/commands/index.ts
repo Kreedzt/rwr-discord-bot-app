@@ -6,6 +6,7 @@ import * as servers from './servers';
 import * as stats from './stats';
 import * as whereis from './whereis';
 import * as mapindex from './mapindex';
+import * as tdoll from './tdoll';
 
 const { REST, Routes } = discord;
 
@@ -13,7 +14,8 @@ const allCommandsInfo: ICommandRegister[] = [
     ...servers.getAllCommandsRegister(),
     ...stats.getAllCommandsRegister(),
     ...whereis.getAllCommandsRegister(),
-    ...mapindex.getAllCommandsRegister()
+    ...mapindex.getAllCommandsRegister(),
+    ...tdoll.getAllCommandsRegister()
 ];
 
 export const registerAllCommands = (env: GlobalEnv) => {

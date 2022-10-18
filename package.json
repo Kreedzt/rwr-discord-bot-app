@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:dev": "tsc -p tsconfig.dev.json",
     "start": "npm run build:dev && node ./dist/index.js",
-    "build:release": "tsc && npx webpack --config webpack.conf.js"
+    "build:release": "tsc && npx webpack --config webpack.conf.js",
+    "updatedb": "node ./update_tdoll_db.js"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,7 @@
     "@babel/preset-typescript": "^7.18.6",
     "@types/node": "^18.7.23",
     "babel-loader": "^8.2.5",
+    "cheerio": "1.0.0-rc.12",
     "prettier": "^2.7.1",
     "typescript": "^4.8.4",
     "webpack": "^5.74.0",
