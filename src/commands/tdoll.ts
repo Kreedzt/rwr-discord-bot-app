@@ -61,7 +61,7 @@ export const TdollCommandRegister: ICommandRegister = {
 
         const totalText = titleText + text + footerText;
 
-        logger.info(`> replay ${TdollCommandRegister} command:`);
+        logger.info(`> replay ${TDOLL_COMMAND_NAME} command:`);
         logger.info(totalText);
         await interaction.reply({ content: totalText, ephemeral: true });
     },
