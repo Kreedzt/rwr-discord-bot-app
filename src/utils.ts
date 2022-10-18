@@ -422,7 +422,7 @@ export const getAllTdollsInDB = (dbData: TDollDBItem[], options: {
     dbData.forEach(data => {
         if (!id && !name) {
             ++count;
-            if (count < QUERY_TDOLL_LIMIT) {
+            if (count <= QUERY_TDOLL_LIMIT) {
                 text += `${count}. ${getTdollFormattedText(data)}`;
             }
             return;
@@ -431,12 +431,12 @@ export const getAllTdollsInDB = (dbData: TDollDBItem[], options: {
         if (id && id === data.id) {
             ++count;
 
-            if (count < QUERY_TDOLL_LIMIT) {
+            if (count <= QUERY_TDOLL_LIMIT) {
                 text += `${count}. ${getTdollFormattedText(data)}`;
             }
         } else if (name && data.name.toLocaleUpperCase().includes(name.toLocaleUpperCase())) {
             ++count;
-            if (count < QUERY_TDOLL_LIMIT) {
+            if (count <= QUERY_TDOLL_LIMIT) {
                 text += `${count}. ${getTdollFormattedText(data)}`;
             }        
         }
