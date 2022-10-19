@@ -78,16 +78,17 @@ export const getJoinServerUrl = (server: OnlineServerItem): string => {
 /**
  * Get formatted server display info text
  * @param server serverItem
+ * @param mapIndexCacheMap map index cache map
  * @returns formatted server display info text
  */
-export const getServerInfoDisplayText = (server: OnlineServerItem): string => {
+export const getServerInfoDisplayText = (server: OnlineServerItem, mapIndexCacheMap: Map<string, number>): string => {
     const mapId = server.map_id;
 
     const mapPathArr = mapId.split('/');
 
     const mapName = mapPathArr[mapPathArr.length - 1];
 
-    const serverText = `${inlineCode(server.country)} ${bold(server.name)}: ${inlineCode(server.current_players + '/' + server.max_players)} (${mapName})\n`;
+    const serverText = `${inlineCode(server.country)} ${bold(server.name)}: ${inlineCode(server.current_players + '/' + server.max_players)} (${mapName} / #${mapIndexCacheMap.get(mapName)})\n`;
 
     const serverUrl = getJoinServerUrl(server);
 
@@ -166,17 +167,18 @@ export const getQueryFilterServerList = (servers: OnlineServerItem[], params: {
 export const getSliceServerListDisplay = (servers: OnlineServerItem[], params: {
     start: number;
     end: number;
+    mapIndexCacheMap: Map<string, number>
 }): {
     text: string;
     count: number;
 } => {
-    const { start, end } = params;
+    const { start, end, mapIndexCacheMap } = params;
 
     let text = '';
     let count = 0;
     servers.slice(start, end).forEach(s => {
         ++count;
-        text += getServerInfoDisplayText(s);
+        text += getServerInfoDisplayText(s, mapIndexCacheMap);
     });
 
     return {
@@ -188,12 +190,13 @@ export const getSliceServerListDisplay = (servers: OnlineServerItem[], params: {
 /**
  * Get formatted all server list display text
  * @param servers all server list
+ * @param mapIndexCacheMap map index cache map
  * @returns formatted server display text
  */
-export const getAllServerListDisplay = (servers: OnlineServerItem[]): string => {
+export const getAllServerListDisplay = (servers: OnlineServerItem[], mapIndexCacheMap: Map<string, number>): string => {
     let text = '';
     servers.forEach(s => {
-        text += getServerInfoDisplayText(s);
+        text += getServerInfoDisplayText(s, mapIndexCacheMap);
     });
 
     return text;
@@ -341,6 +344,21 @@ export const getAllMapIndexDisplay = (mapindexArr: string[]): {
 }
 
 /**
+ * Get all map index cache Map
+ * @param mapArr map index array
+ * @returns map index Map
+ */
+export const generateMapIndexCacheMap = (mapArr: string[]): Map<string, number> => {
+    const cache = new Map<string, number>();
+
+    mapArr.forEach((map, index) => {
+        cache.set(map, index + 1);
+    });
+
+    return cache;
+}
+
+/**
  * Get tdoll db data by file path
  * @param filePath db file path
  */
@@ -446,7 +464,7 @@ export const getAllTdollsInDB = (dbData: TDollDBItem[], options: {
             ++count;
             if (count <= QUERY_TDOLL_LIMIT) {
                 text += `${count}. ${getTdollFormattedText(data)}\n`;
-            }        
+            }
         }
     });
 

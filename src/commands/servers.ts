@@ -2,11 +2,18 @@ import { inlineCode, SlashCommandBuilder } from "discord.js";
 import { QUERY_SERVERS_LIMIT } from "../constants";
 import { logger } from "../logger";
 import { ICommandRegister } from "../types";
-import { getQueryFilterServerList, getSliceServerListDisplay, queryAllServers } from "../utils";
+import { generateMapIndexCacheMap, getQueryFilterServerList, getSliceServerListDisplay, queryAllServers } from "../utils";
 
 const SERVERS_COMMAND_NAME = 'servers';
 const SERVERS_COMMAND_PAGE_PARAM_NAME = 'page';
 const SERVERS_COMMAND_COUNTRY_PARAM_NAME = 'country';
+
+/**
+ * All map index cache
+ * key: map name: map1, map2, ...
+ * value: index: 1, 2, 3, ...
+ */
+let MAP_INDEX_CACHE_MAP = new Map<string, number>();
 
 export const ServersCommandRegister: ICommandRegister = {
     name: SERVERS_COMMAND_NAME,
@@ -23,6 +30,11 @@ export const ServersCommandRegister: ICommandRegister = {
                 .setRequired(false))
         .toJSON(),
     resolve: async (interaction, env) => {
+        // generate map cache map
+        if (MAP_INDEX_CACHE_MAP.size === 0) {
+            MAP_INDEX_CACHE_MAP = generateMapIndexCacheMap(env.MAP_INDEX);
+        }
+
         const serverList = await queryAllServers(env.SERVER_MATCH_REGEX);
 
         const inputPageNum = interaction.options.getNumber(SERVERS_COMMAND_PAGE_PARAM_NAME, false);
@@ -40,6 +52,7 @@ export const ServersCommandRegister: ICommandRegister = {
         const { text, count } = getSliceServerListDisplay(filteredTotal, {
             start: startIndex,
             end: endIndex,
+            mapIndexCacheMap: MAP_INDEX_CACHE_MAP
         });
 
         let titleText = '';
