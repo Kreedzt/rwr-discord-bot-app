@@ -9,6 +9,7 @@ export interface GlobalEnv {
     PUBLIC_KEY: string;
     SERVER_MATCH_REGEX: string
     MAP_INDEX: string[];
+    MAP_INDEX_NAME: string[];
     TDOLL_DB: string;
 }
 

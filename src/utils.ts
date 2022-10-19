@@ -311,13 +311,14 @@ export const getAllServerStatisticsDisplay = (serverList: OnlineServerItem[]): s
 /**
  * Get map id formatted text
  * @param mapId map id
+ * @param mapName map name
  * @param index pos
  * @returns formatted text
  */
-export const getMapInfoDisplay = (mapId: string, index: number): string => {
+export const getMapInfoDisplay = (mapId: string, mapName: string, index: number): string => {
     let text = '';
 
-    text += `${index}. ${mapId}\n`;
+    text += `${index}. ${mapId}:  ${inlineCode(mapName)}\n`;
 
     return text;
 }
@@ -325,16 +326,17 @@ export const getMapInfoDisplay = (mapId: string, index: number): string => {
 /**
  * Get all map formatted info
  * @param mapindexArr map index array
+ * @param mapNameArr map name array
  * @returns formatted info
  */
-export const getAllMapIndexDisplay = (mapindexArr: string[]): {
+export const getAllMapIndexDisplay = (mapindexArr: string[], mapNameArr: string[]): {
     count: number;
     text: string;
 } => {
     let text = '';
 
     mapindexArr.forEach((map, index) => {
-        text += getMapInfoDisplay(map, index + 1);
+        text += getMapInfoDisplay(map, mapNameArr[index], index + 1);
     });
 
     return {

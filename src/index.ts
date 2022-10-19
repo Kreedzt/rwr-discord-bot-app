@@ -9,7 +9,8 @@ dotenv.config();
 const _env = process.env as unknown as Record<string, string>;
 const env = {
     ..._env,
-    MAP_INDEX: JSON.parse(_env.MAP_INDEX ?? '[]') as string[]
+    MAP_INDEX: JSON.parse(_env.MAP_INDEX ?? '[]') as string[],
+    MAP_INDEX_NAME: JSON.parse(_env.MAP_INDEX_NAME ?? '[]') as string[]
 } as GlobalEnv;
 
 // Client instance

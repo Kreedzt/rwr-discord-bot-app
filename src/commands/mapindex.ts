@@ -16,7 +16,7 @@ export const MapindexCommandRegister: ICommandRegister = {
 
         const titleText = `Here's all map index info:\n`;
 
-        const { text, count} = getAllMapIndexDisplay(env.MAP_INDEX);
+        const { text, count } = getAllMapIndexDisplay(env.MAP_INDEX, env.MAP_INDEX_NAME);
 
         const footerText = `\nTotal ${count} map(s).`;
 

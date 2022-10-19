@@ -57,7 +57,7 @@ export const TdollCommandRegister: ICommandRegister = {
             return;
         }
 
-        const footerText = `\nTotal ${inlineCode(count.toString())} results.(limited to display ${QUERY_TDOLL_LIMIT} results.)`;
+        const footerText = `\nTotal ${inlineCode(count.toString())} result(s).(limited to display ${QUERY_TDOLL_LIMIT} results.)`;
 
         const totalText = titleText + text + footerText;
 
