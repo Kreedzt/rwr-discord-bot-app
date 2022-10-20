@@ -55,5 +55,8 @@ export interface TDollDBItem {
     name: string;
     id: number;
     class: string;
-    star: number;
+    /**
+     * 2 | 3 | 4 | 5 | 6 | Extra
+     */
+    star: string;
 }

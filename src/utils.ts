@@ -414,7 +414,7 @@ export const getTdollInfoUrl = (tdoll: TDollDBItem): string => {
 export const getTdollFormattedText = (tdoll: TDollDBItem): string => {
     let text = '';
 
-    const stars = `${tdoll.star} * :star:`;
+    const stars = `${tdoll.star}  :star:`;
 
     text += `No.${tdoll.id} `;
 

@@ -44,24 +44,27 @@ const getTdollInfo = (element) => {
         targetClass = 'SG';
     }
 
-    let targetStars = -1;
+    let targetStars = '';
     if (rarityStarsSrc.includes('6star')) {
-        targetStars = 6;
+        targetStars = '6';
     } else if (rarityStarsSrc.includes('5star')) {
-        targetStars = 5;
+        targetStars = '5';
     } else if (rarityStarsSrc.includes('4star')) {
-        targetStars = 4;
+        targetStars = '4';
     }
     else if (rarityStarsSrc.includes('3star')) {
-        targetStars = 3;
+        targetStars = '3';
     }
     else if (rarityStarsSrc.includes('2star')) {
-        targetStars = 2;
+        targetStars = '2';
+    }
+    else if (rarityStarsSrc.includes('EXTRAstar')) {
+        targetStars = 'Extra';
     }
 
     const resItem = {
         name,
-        id: index,
+        id: isNaN(index) ? -1 : index,
         class: targetClass,
         star: targetStars
     };
