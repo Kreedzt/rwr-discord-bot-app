@@ -416,7 +416,7 @@ export const getTdollFormattedText = (tdoll: TDollDBItem): string => {
 
     const stars = `${tdoll.star} * :star:`;
 
-    text += `No.${tdoll.id}`;
+    text += `No.${tdoll.id} `;
 
     text += ` ${inlineCode(tdoll.name)} `;
 
