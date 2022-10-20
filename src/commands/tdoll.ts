@@ -46,7 +46,15 @@ export const TdollCommandRegister: ICommandRegister = {
             name: queryTdollName
         });
 
-        const titleText = `Here's query t-doll res:\n`;
+        let queryText = '';
+
+        if (queryTdollName) {
+            queryText = `(name: ${queryTdollName})`
+        } else if (queryTdollId) {
+            queryText = `(id: ${queryTdollId})`;
+        }
+
+        const titleText = `Here's query t-doll${queryText} res:\n`;
 
         if (count === 0) {
             const nothingText = titleText + '\n No more results.';
