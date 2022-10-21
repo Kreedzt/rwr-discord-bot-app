@@ -7,6 +7,7 @@ import { ResServerItem, Res, OnlineServerItem, Nullable, TDollDBItem } from './t
 import { logger } from './logger';
 
 const SERVER_API_URL = "http://rwr.runningwithrifles.com/rwr_server_list";
+const WIKI_API_URL = "https://iopwiki.com";
 
 /**
  * Get players list string array
@@ -215,9 +216,10 @@ export const encodePlayerName = (user: string): string => {
  * Get formatted combined user & server info to display text
  * @param user user name
  * @param server server info
+ * @param mapIndexCacheMap map index cache
  * @returns formatted display text
  */
-const getUserInfoInServerDisplayText = (user: string, server: OnlineServerItem): string => {
+const getUserInfoInServerDisplayText = (user: string, server: OnlineServerItem, mapIndexCacheMap: Map<string, number>): string => {
     const mapId = server.map_id;
 
     const mapPathArr = mapId.split('/');
@@ -226,7 +228,9 @@ const getUserInfoInServerDisplayText = (user: string, server: OnlineServerItem):
 
     const serverUrl = getJoinServerUrl(server);
 
-    const infoText = `${encodePlayerName(user)} is in ${inlineCode(server.country)} ${bold(server.name)}: ${inlineCode(server.current_players + '/' + server.max_players)} (${mapName})\n`;
+    const mapIndex = mapIndexCacheMap.get(mapName)! + 1;
+
+    const infoText = `${encodePlayerName(user)} is in ${inlineCode(server.country)} ${bold(server.name)}: ${inlineCode(server.current_players + '/' + server.max_players)} (${mapName} / #${mapIndex})\n`;
 
     const text = infoText + serverUrl + '\n\n';
 
@@ -241,6 +245,7 @@ const getUserInfoInServerDisplayText = (user: string, server: OnlineServerItem):
  */
 export const getUserInServerListDisplay = (user: string, serverList: OnlineServerItem[], options: {
     isCaseSensitivity?: Nullable<boolean>;
+    mapIndexCacheMap: Map<string, number>;
 }): {
     text: string;
     count: number;
@@ -249,7 +254,7 @@ export const getUserInServerListDisplay = (user: string, serverList: OnlineServe
 
     let count = 0;
 
-    const { isCaseSensitivity } = options;
+    const { isCaseSensitivity, mapIndexCacheMap } = options;
 
     serverList.forEach(s => {
         const playersList = getCorrectPlayersList(s);
@@ -268,7 +273,7 @@ export const getUserInServerListDisplay = (user: string, serverList: OnlineServe
                     return;
                 }
 
-                text += getUserInfoInServerDisplayText(player, s);
+                text += getUserInfoInServerDisplayText(player, s, mapIndexCacheMap);
             }
         })
     });
@@ -403,7 +408,7 @@ export const getTdollInfoUrl = (tdoll: TDollDBItem): string => {
 
     const encodeName = rawName.replace(/\s/g, '_');
 
-    return `https://iopwiki.com/wiki/${encodeURIComponent(encodeName)}`;
+    return `${WIKI_API_URL}/wiki/${encodeURIComponent(encodeName)}`;
 }
 
 /**
