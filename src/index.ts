@@ -14,7 +14,7 @@ const env = {
 } as GlobalEnv;
 
 // Client instance
-const { Client, GatewayIntentBits } = discord;
+const { Client, GatewayIntentBits, Events } = discord;
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -22,7 +22,7 @@ client.on('ready', () => {
     logger.info(`Logged in as ${client?.user?.tag}!`);
 });
 
-client.login(env.DISCORD_TOKEN);
+client.login(env.DISCORD_TOKEN); 
 
 logger.info('> Discord Bot started.');
 
@@ -32,4 +32,12 @@ registerAllCommands(env);
 client.on('interactionCreate', async (interaction) => {
     // Resolve commands
     await resolveCommands(interaction, env);
+});
+
+client.on(Events.ShardError, error => {
+    logger.error('A websocket connection encountered an error:', error);
+});
+
+process.on('unhandledRejection', error => {
+	logger.error('Unhandled promise rejection:', error);
 });
