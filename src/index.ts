@@ -36,6 +36,8 @@ client.on('interactionCreate', async (interaction) => {
 
 client.on(Events.ShardError, error => {
     logger.error('A websocket connection encountered an error:', error);
+    // NetworkError, Need restart
+    process.exit(-1);
 });
 
 process.on('unhandledRejection', error => {
