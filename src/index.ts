@@ -42,4 +42,6 @@ client.on(Events.ShardError, error => {
 
 process.on('unhandledRejection', error => {
 	logger.error('Unhandled promise rejection:', error);
+    // restart
+    process.exit(-1);
 });
