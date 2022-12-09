@@ -5,6 +5,7 @@ import { ICommandRegister, TDollDBItem } from "../types";
 import { queryAllServers, getUserInServerListDisplay, generateTdollDBCache, getTDollDBContent, getAllTdollsInDB } from "../utils";
 
 const TDOLL_COMMAND_NAME = 'tdoll';
+const TDOLL_COMMAND_PUBLIC = 'public';
 
 const dbCache: {
     idMap: Map<number, TDollDBItem>;
@@ -25,12 +26,18 @@ export const TdollCommandRegister: ICommandRegister = {
         .addNumberOption(option =>
             option.setName('id')
                 .setDescription('Enable tdoll id')
-        ).toJSON(),
+        )
+        .addBooleanOption(option =>
+            option.setName(TDOLL_COMMAND_PUBLIC)
+                .setDescription('Reply this message public')
+                .setRequired(false))
+        .toJSON(),
     resolve: async (interaction, env) => {
-        const serverList = await queryAllServers(env.SERVER_MATCH_REGEX);
+        // const serverList = await queryAllServers(env.SERVER_MATCH_REGEX);
 
         const queryTdollName = interaction.options.getString('name', false);
         const queryTdollId = interaction.options.getNumber('id', false);
+        const isPublic = interaction.options.getBoolean(TDOLL_COMMAND_PUBLIC, false);
 
         // Cache
         if (dbCache.idMap.size === 0 || dbCache.nameMap.size === 0) {
@@ -61,7 +68,7 @@ export const TdollCommandRegister: ICommandRegister = {
 
             logger.info(`> replay ${TDOLL_COMMAND_NAME} command:`);
             logger.info(nothingText);
-            await interaction.reply({ content: nothingText, ephemeral: true });
+            await interaction.reply({ content: nothingText, ephemeral: !isPublic });
             return;
         }
 
@@ -71,7 +78,7 @@ export const TdollCommandRegister: ICommandRegister = {
 
         logger.info(`> replay ${TDOLL_COMMAND_NAME} command:`);
         logger.info(totalText);
-        await interaction.reply({ content: totalText, ephemeral: true });
+        await interaction.reply({ content: totalText, ephemeral: !isPublic });
     },
 }
 

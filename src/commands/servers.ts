@@ -7,6 +7,7 @@ import { generateMapIndexCacheMap, getQueryFilterServerList, getSliceServerListD
 const SERVERS_COMMAND_NAME = 'servers';
 const SERVERS_COMMAND_PAGE_PARAM_NAME = 'page';
 const SERVERS_COMMAND_COUNTRY_PARAM_NAME = 'country';
+const SERVERS_COMMAND_PUBLIC = 'public';
 
 /**
  * All map index cache
@@ -28,6 +29,10 @@ export const ServersCommandRegister: ICommandRegister = {
             option.setName(SERVERS_COMMAND_COUNTRY_PARAM_NAME)
                 .setDescription('Filter by country')
                 .setRequired(false))
+        .addBooleanOption(option =>
+            option.setName(SERVERS_COMMAND_PUBLIC)
+                .setDescription('Reply this message public')
+                .setRequired(false))
         .toJSON(),
     resolve: async (interaction, env) => {
         // generate map cache map
@@ -39,6 +44,7 @@ export const ServersCommandRegister: ICommandRegister = {
 
         const inputPageNum = interaction.options.getNumber(SERVERS_COMMAND_PAGE_PARAM_NAME, false);
         const inputCountry = interaction.options.getString(SERVERS_COMMAND_COUNTRY_PARAM_NAME, false);
+        const isPublic = interaction.options.getBoolean(SERVERS_COMMAND_PUBLIC, false);
 
         const pageNum = inputPageNum ? inputPageNum - 1 : 0;
 
@@ -90,7 +96,7 @@ export const ServersCommandRegister: ICommandRegister = {
 
             logger.info(`> replay ${SERVERS_COMMAND_NAME} command:`);
             logger.info(nothingText);
-            await interaction.reply({ content: nothingText, ephemeral: true });
+            await interaction.reply({ content: nothingText, ephemeral: !isPublic });
             return;
         }
 
@@ -99,7 +105,7 @@ export const ServersCommandRegister: ICommandRegister = {
         const totalText = titleText + text + footerText;
         logger.info(`> replay ${SERVERS_COMMAND_NAME} command:`);
         logger.info(totalText);
-        await interaction.reply({ content: totalText, ephemeral: true });
+        await interaction.reply({ content: totalText, ephemeral: !isPublic });
     }
 }
 

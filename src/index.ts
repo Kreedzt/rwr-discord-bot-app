@@ -22,7 +22,11 @@ client.on('ready', () => {
     logger.info(`Logged in as ${client?.user?.tag}!`);
 });
 
-client.login(env.DISCORD_TOKEN); 
+client.login(env.DISCORD_TOKEN).catch(err => {
+    logger.error('Login err:', err);
+    // NetworkError, Need restart
+    process.exit(-1);
+}); 
 
 logger.info('> Discord Bot started.');
 
