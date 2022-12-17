@@ -25,7 +25,7 @@ export const TdollCommandRegister: ICommandRegister = {
                 .setDescription('Enter t-doll name.'))
         .addNumberOption(option =>
             option.setName('id')
-                .setDescription('Enable tdoll id')
+                .setDescription('Enter tdoll id')
         )
         .addBooleanOption(option =>
             option.setName(TDOLL_COMMAND_PUBLIC)
