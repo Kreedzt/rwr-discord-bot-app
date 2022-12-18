@@ -29,7 +29,9 @@ export const registerAllCommands = (env: GlobalEnv) => {
                 `Successfully registered ${data.length} application commands.`
             )
         )
-        .catch(console.error);
+        .catch(err => {
+            logger.error('Register commands error', err);
+        });
 }
 
 export const resolveCommands = async (interaction: Interaction, env: GlobalEnv) => {
@@ -42,6 +44,10 @@ export const resolveCommands = async (interaction: Interaction, env: GlobalEnv) 
     const commandInfo = allCommandsInfo.find(c => c.name === commandName);
 
     if (commandInfo) {
-        await commandInfo.resolve(interaction, env);
+        try {
+            await commandInfo.resolve(interaction, env);
+        } catch (e) {
+            logger.error('resolve command error', e);
+        }
     }
 }
