@@ -14,12 +14,16 @@ const env = {
 } as GlobalEnv;
 
 // Client instance
-const { Client, GatewayIntentBits, Events } = discord;
+const { Client, GatewayIntentBits, Events, ActivityType } = discord;
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.on('ready', () => {
     logger.info(`Logged in as ${client?.user?.tag}!`);
+
+    client.user?.setActivity('RWR server data', {
+        type: ActivityType.Watching
+    });
 });
 
 client.login(env.DISCORD_TOKEN).catch(err => {
