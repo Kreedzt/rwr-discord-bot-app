@@ -1,0 +1,15 @@
+/.github
+/.idea
+/node_modules
+/.log
+/temp
+
+.env
+docker-compose.yaml
+docker-compose-example.yaml
+
+LICENSE
+.ignore
+.prettierrc
+*.png
+*.7z

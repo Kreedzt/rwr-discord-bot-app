@@ -37,7 +37,7 @@ export const ServersCommandRegister: ICommandRegister = {
     resolve: async (interaction, env) => {
         // generate map cache map
         if (MAP_INDEX_CACHE_MAP.size === 0) {
-            MAP_INDEX_CACHE_MAP = generateMapIndexCacheMap(env.MAP_INDEX);
+            MAP_INDEX_CACHE_MAP = generateMapIndexCacheMap(env.MAP_DATA);
         }
 
         const serverList = await queryAllServers(env.SERVER_MATCH_REGEX);

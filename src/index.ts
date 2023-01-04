@@ -1,17 +1,10 @@
-import * as dotenv from 'dotenv';
 import * as discord from 'discord.js';
 import { logger } from './logger';
-import { GlobalEnv } from './types';
+import { parseEnv } from './env';
 import { registerAllCommands, resolveCommands } from './commands';
 
 // env
-dotenv.config();
-const _env = process.env as unknown as Record<string, string>;
-const env = {
-    ..._env,
-    MAP_INDEX: JSON.parse(_env.MAP_INDEX ?? '[]') as string[],
-    MAP_INDEX_NAME: JSON.parse(_env.MAP_INDEX_NAME ?? '[]') as string[]
-} as GlobalEnv;
+const env = parseEnv();
 
 // Client instance
 const { Client, GatewayIntentBits, Events, ActivityType } = discord;

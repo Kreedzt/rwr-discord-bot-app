@@ -19,7 +19,7 @@ export const MapindexCommandRegister: ICommandRegister = {
     resolve: async (interaction, env) => {
         const titleText = `Here's all map index info:\n`;
 
-        const { text, count } = getAllMapIndexDisplay(env.MAP_INDEX, env.MAP_INDEX_NAME);
+        const { text, count } = getAllMapIndexDisplay(env.MAP_DATA);
 
         const isPublic = interaction.options.getBoolean(MAP_INDEX_COMMAND_PUBLIC, false);
 

@@ -2,15 +2,20 @@ import type { ChatInputCommandInteraction, Interaction, RESTPostAPIApplicationCo
 
 export type Nullable<T> = T | null | undefined;
 
+export interface MapDataItem {
+    id: string;
+    name: string;
+}
+
 export interface GlobalEnv {
     APP_ID: string;
     GUILD_ID: string;
     DISCORD_TOKEN: string;
     PUBLIC_KEY: string;
     SERVER_MATCH_REGEX: string
-    MAP_INDEX: string[];
-    MAP_INDEX_NAME: string[];
     TDOLL_DB: string;
+    MAP_DB: string;
+    MAP_DATA: MapDataItem[];
 }
 
 export interface ResServerItem {

@@ -3,7 +3,7 @@ import { APIEmbed, Embed, EmbedBuilder, bold, quote, codeBlock, inlineCode, hype
 import { XMLParser } from 'fast-xml-parser';
 import * as fs from 'fs';
 import { QUERY_TDOLL_LIMIT, QUERY_USER_IN_SERVERS_LIMIT } from './constants';
-import { ResServerItem, Res, OnlineServerItem, Nullable, TDollDBItem } from './types';
+import { ResServerItem, Res, OnlineServerItem, Nullable, TDollDBItem, GlobalEnv, MapDataItem } from './types';
 import { logger } from './logger';
 
 const SERVER_API_URL = "http://rwr.runningwithrifles.com/rwr_server_list";
@@ -330,22 +330,21 @@ export const getMapInfoDisplay = (mapId: string, mapName: string, index: number)
 
 /**
  * Get all map formatted info
- * @param mapindexArr map index array
- * @param mapNameArr map name array
+ * @param mapData Global Env map data
  * @returns formatted info
  */
-export const getAllMapIndexDisplay = (mapindexArr: string[], mapNameArr: string[]): {
+export const getAllMapIndexDisplay = (mapData: GlobalEnv['MAP_DATA']): {
     count: number;
     text: string;
 } => {
     let text = '';
 
-    mapindexArr.forEach((map, index) => {
-        text += getMapInfoDisplay(map, mapNameArr[index], index + 1);
+    mapData.forEach((map, index) => {
+        text += getMapInfoDisplay(map.id, map.name, index + 1);
     });
 
     return {
-        count: mapindexArr.length,
+        count: mapData.length,
         text
     };
 }
@@ -355,11 +354,11 @@ export const getAllMapIndexDisplay = (mapindexArr: string[], mapNameArr: string[
  * @param mapArr map index array
  * @returns map index Map
  */
-export const generateMapIndexCacheMap = (mapArr: string[]): Map<string, number> => {
+export const generateMapIndexCacheMap = (mapArr: MapDataItem[]): Map<string, number> => {
     const cache = new Map<string, number>();
 
     mapArr.forEach((map, index) => {
-        cache.set(map, index + 1);
+        cache.set(map.id, index + 1);
     });
 
     return cache;
