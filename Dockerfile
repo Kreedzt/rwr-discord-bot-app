@@ -17,6 +17,11 @@ FROM node:18.12.1
 
 WORKDIR /app
 
-COPY --from=builder /app/dist /dist
+COPY package.json ./
+COPY pnpm-lock.yaml ./
+
+RUN npx pnpm i --production
+
+COPY --from=builder /app/dist /app/dist
 
 CMD ["node", "/app/dist/index.js"]

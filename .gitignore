@@ -21,3 +21,4 @@ yarn-error.log*
 tdoll_db.json
 map_db.json
 docker-compose.yaml
+*.sh
