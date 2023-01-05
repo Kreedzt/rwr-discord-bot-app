@@ -13,7 +13,7 @@ COPY ./ ./
 RUN npm run build:dev
 
 # run
-FROM node:18.12.1
+FROM node:18.12.1-alpine
 
 WORKDIR /app
 
