@@ -1,13 +1,12 @@
+version: "3"
+
 services:
-  castling-discord-bot:
-    image: rwr-discord-app
-    configs:
-      - httpd-config
-    environments:
-
-
-volumes:
-  db-data:
-    driver: flocker
-    driver_opts:
-      size: "10GiB"
+  bot:
+    image: zhaozisong0/rwr-discord-bot:latest
+    # rename this
+    container_name: my-rwr-discord-bot
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    # merge your env
+    env_file: .env
