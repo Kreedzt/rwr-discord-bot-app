@@ -3,13 +3,22 @@
 /node_modules
 /.log
 /temp
+/data
+/dist
+/logs
 
+# env
 .env
+.env-example
 docker-compose.yaml
 docker-compose-example.yaml
 
 LICENSE
 .ignore
 .prettierrc
+*.md
 *.png
 *.7z
+*.sh
+map_db_example.json
+update_tdoll_db.js
