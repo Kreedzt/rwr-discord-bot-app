@@ -45,9 +45,7 @@ pnpm i
 打包及启动:
 
 ```sh
-pnpm build:dev
-# 启动项目
-node dist/index.js
+npm run start
 ```
 
 根据 `.env-example` 文件, 编写自己的 `.env` 文件, 变量描述如下:

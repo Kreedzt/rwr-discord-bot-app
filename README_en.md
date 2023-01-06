@@ -45,14 +45,12 @@ pnpm i
 2. Packing and start-up:
 
 ```sh
-pnpm build:dev
-# start
-node dist/index.js
+npm run start
 ```
 
 Based on the `.env-example` file, write your own `.env` file with the following variable descriptions:
 
-- APP_ID: Your bot' application id
+- APP_ID: Your bot's application id
 - GUILD_ID: The id of the server where your bot is located
 - DISCORD_TOKEN: Your bot's token
 - PUBLIC_KEY: Your bot's public Key
