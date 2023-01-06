@@ -6,6 +6,7 @@
 /data
 /dist
 /logs
+/.vscode
 
 # env
 .env
