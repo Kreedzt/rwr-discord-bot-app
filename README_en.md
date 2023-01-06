@@ -1,6 +1,13 @@
 # RWR Discord Bot
 
+![license](https://badgen.net/github/license/Kreedzt/rwr-discord-bot-app)
+![latest release](https://badgen.net/github/release/Kreedzt/rwr-discord-bot-app)
+![commits count](https://badgen.net/github/commits/Kreedzt/rwr-discord-bot-app)
+![last commit](https://badgen.net/github/last-commit/Kreedzt/rwr-discord-bot-app)
+
 Simple Discord Bot for querying RWR Server status
+
+English | [简体中文](README.md)
 
 ## Build
 
@@ -59,7 +66,7 @@ Prepare the required files for the data directory
 
 ## Deployment
 
-准备工作:
+Preparation:
 
 1. Prepare the required files for the data directory:
 

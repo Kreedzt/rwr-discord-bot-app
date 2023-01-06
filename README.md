@@ -1,6 +1,13 @@
 # RWR Discord Bot
 
+![license](https://badgen.net/github/license/Kreedzt/rwr-discord-bot-app)
+![latest release](https://badgen.net/github/release/Kreedzt/rwr-discord-bot-app)
+![commits count](https://badgen.net/github/commits/Kreedzt/rwr-discord-bot-app)
+![last commit](https://badgen.net/github/last-commit/Kreedzt/rwr-discord-bot-app)
+
 简易的用以查询 RWR Server 状态的 Discord Bot
+
+[English](README_en.md) | 简体中文
 
 ## 构建
 
