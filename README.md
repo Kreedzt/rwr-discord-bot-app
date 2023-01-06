@@ -137,3 +137,7 @@ docker-compose up -d
 ```sh
 docker-compose down
 ```
+
+## LICENSE
+
+[MIT](http://opensource.org/licenses/MIT)

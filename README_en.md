@@ -137,3 +137,7 @@ Use the following command to stop:
 ```sh
 docker-compose down
 ```
+
+## LICENSE
+
+[MIT](http://opensource.org/licenses/MIT)
