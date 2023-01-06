@@ -77,7 +77,7 @@ node dist/index.js
 - SERVER_MATCH_REGEX: 通过此正则匹配想要查询的 RWR 服务器名称
 - DATA_FOLDER: 数据文件存放目录, 通常为 `data`, 然后挂载目录也与此一致为 `/app/data`
 
-4. 使用如下方式启动:
+4. 使用如下方式之一启动:
 
 - PM2
 - Docker
