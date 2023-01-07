@@ -15,7 +15,7 @@ export const parseEnv = (): GlobalEnv => {
     const env = {
         ..._env,
         MAP_DATA: JSON.parse(map_db_content) as GlobalEnv['MAP_DATA'],
-        TDOLL_DB: JSON.parse(tdoll_db_content) as GlobalEnv['TDOLL_DB'],
+        TDOLL_DATA: JSON.parse(tdoll_db_content) as GlobalEnv['TDOLL_DATA'],
     } as GlobalEnv;
 
     return env;

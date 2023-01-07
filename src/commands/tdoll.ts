@@ -41,8 +41,7 @@ export const TdollCommandRegister: ICommandRegister = {
 
         // Cache
         if (dbCache.idMap.size === 0 || dbCache.nameMap.size === 0) {
-            const db = getTDollDBContent(env.TDOLL_DB);
-            const cacheMap = generateTdollDBCache(db);
+            const cacheMap = generateTdollDBCache(env.TDOLL_DATA);
             dbCache.idMap = cacheMap.idMap;
             dbCache.nameMap = cacheMap.nameMap;
         }

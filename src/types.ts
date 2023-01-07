@@ -12,9 +12,9 @@ export interface GlobalEnv {
     GUILD_ID: string;
     DISCORD_TOKEN: string;
     PUBLIC_KEY: string;
-    SERVER_MATCH_REGEX: string
-    TDOLL_DB: string;
-    MAP_DB: string;
+    SERVER_MATCH_REGEX: string;
+    DATA_FOLDER: string;
+    TDOLL_DATA: TDollDBItem[];
     MAP_DATA: MapDataItem[];
 }
 
