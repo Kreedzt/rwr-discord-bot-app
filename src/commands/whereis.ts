@@ -3,6 +3,7 @@ import { QUERY_USER_IN_SERVERS_LIMIT } from "../constants";
 import { logger } from "../logger";
 import { ICommandRegister } from "../types";
 import { queryAllServers, getUserInServerListDisplay, generateMapIndexCacheMap } from "../utils";
+import { LocationService } from "../services/location";
 
 const WHEREIS_COMMAND_NAME = 'whereis';
 
@@ -40,6 +41,8 @@ export const WhereisCommandRegister: ICommandRegister = {
         const optionParseText = isCaseSensitivity ? '(Case sensivity enabled)' : '';
 
         const titleText = `Here's query ${inlineCode(queryUserName)}${optionParseText} results:\n\n`;
+
+        await LocationService.getInstance().batchQuery(serverList.map(s => s.address));
 
         const { text, count } = getUserInServerListDisplay(queryUserName, serverList, {
             isCaseSensitivity,

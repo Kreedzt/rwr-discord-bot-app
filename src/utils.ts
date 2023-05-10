@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { APIEmbed, Embed, EmbedBuilder, bold, quote, codeBlock, inlineCode, hyperlink } from 'discord.js';
+import { APIEmbed, Embed, EmbedBuilder, bold, quote, codeBlock, inlineCode, hyperlink, } from 'discord.js';
 import { XMLParser } from 'fast-xml-parser';
 import * as fs from 'fs';
 import { QUERY_TDOLL_LIMIT, QUERY_USER_IN_SERVERS_LIMIT } from './constants';
 import { ResServerItem, Res, OnlineServerItem, Nullable, TDollDBItem, GlobalEnv, MapDataItem } from './types';
 import { logger } from './logger';
+import { LocationService } from './services/location';
 
 const SERVER_API_URL = "http://rwr.runningwithrifles.com/rwr_server_list";
 const WIKI_API_URL = "https://iopwiki.com";
@@ -89,7 +90,15 @@ export const getServerInfoDisplayText = (server: OnlineServerItem, mapIndexCache
 
     const mapName = mapPathArr[mapPathArr.length - 1];
 
-    const serverText = `${inlineCode(server.country)} ${bold(server.name)}: ${inlineCode(server.current_players + '/' + server.max_players)} (${mapName} / #${mapIndexCacheMap.get(mapName)})\n`;
+
+    let serverCountryContent = `${inlineCode(server.country)}`;
+
+    const record = LocationService.getInstance().getCache(server.address);
+    if (record) {
+        serverCountryContent = `:flag_${record.countryCode.toLocaleLowerCase()}:`;
+    }
+
+    const serverText = `${serverCountryContent} ${bold(server.name)}: ${inlineCode(server.current_players + '/' + server.max_players)} (${mapName} / #${mapIndexCacheMap.get(mapName)})\n`;
 
     const serverUrl = getJoinServerUrl(server);
 
@@ -99,7 +108,7 @@ export const getServerInfoDisplayText = (server: OnlineServerItem, mapIndexCache
 }
 
 /**
- * Send Http request, get all server list with matchRegex filter
+ * Send http request, get all server list with matchRegex filter
  * @param matchRegex server name match regex
  * @returns all server list
  */
@@ -476,3 +485,11 @@ export const getAllTdollsInDB = (dbData: TDollDBItem[], options: {
 
     return { text, count };
 }
+
+// /**
+//  * Send Http request, get ip location code(eg: CN, US...)
+//  * @param ips 
+//  */
+// export const queryIpsLocation = async (ips: string[]) => {
+
+// }

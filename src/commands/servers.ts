@@ -3,6 +3,7 @@ import { QUERY_SERVERS_LIMIT } from "../constants";
 import { logger } from "../logger";
 import { ICommandRegister } from "../types";
 import { generateMapIndexCacheMap, getQueryFilterServerList, getSliceServerListDisplay, queryAllServers } from "../utils";
+import { LocationService } from "../services/location";
 
 const SERVERS_COMMAND_NAME = 'servers';
 const SERVERS_COMMAND_PAGE_PARAM_NAME = 'page';
@@ -54,6 +55,8 @@ export const ServersCommandRegister: ICommandRegister = {
         const filteredTotal = getQueryFilterServerList(serverList, {
             country: inputCountry
         });
+
+        await LocationService.getInstance().batchQuery(filteredTotal.map(s => s.address));
 
         const { text, count } = getSliceServerListDisplay(filteredTotal, {
             start: startIndex,
