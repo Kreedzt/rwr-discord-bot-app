@@ -84,25 +84,7 @@ export const getJoinServerUrl = (server: OnlineServerItem): string => {
  * @returns formatted server display info text
  */
 export const getServerInfoDisplayText = (server: OnlineServerItem, mapIndexCacheMap: Map<string, number>): string => {
-    const mapId = server.map_id;
-
-    const mapPathArr = mapId.split('/');
-
-    const mapName = mapPathArr[mapPathArr.length - 1];
-
-
-    let serverCountryContent = `${inlineCode(server.country)}`;
-
-    const record = LocationService.getInstance().getCache(server.address);
-    if (record) {
-        serverCountryContent = `:flag_${record.countryCode.toLocaleLowerCase()}:`;
-    }
-
-    const serverText = `${serverCountryContent} ${bold(server.name)}: ${inlineCode(server.current_players + '/' + server.max_players)} (${mapName} / #${mapIndexCacheMap.get(mapName)})\n`;
-
-    const serverUrl = getJoinServerUrl(server);
-
-    const text = serverText + serverUrl + '\n' + '\n';
+    const text = getServerDisplayRaw(server, mapIndexCacheMap) + '\n' + '\n';
 
     return text;
 }
@@ -221,6 +203,36 @@ export const encodePlayerName = (user: string): string => {
     return `\`\`${user}\`\``;
 }
 
+
+/**
+ * Get formatted server display raw text
+ * @param server serverItem
+ * @param mapIndexCacheMap map index cache map
+ * @returns formatted server display text(raw)
+ */
+const getServerDisplayRaw = (server: OnlineServerItem, mapIndexCacheMap: Map<string, number>) => {
+    const mapId = server.map_id;
+
+    const mapPathArr = mapId.split('/');
+
+    const mapName = mapPathArr[mapPathArr.length - 1];
+
+    let serverCountryContent = `${inlineCode(server.country)}`;
+
+    const record = LocationService.getInstance().getCache(server.address);
+    if (record) {
+        serverCountryContent = `:flag_${record.countryCode.toLocaleLowerCase()}:`;
+    }
+
+    const serverText = `${serverCountryContent} ${bold(server.name)}: ${inlineCode(server.current_players + '/' + server.max_players)} (${mapName} / #${mapIndexCacheMap.get(mapName)})\n`;
+
+    const serverUrl = getJoinServerUrl(server);
+
+    const text = serverText + serverUrl
+
+    return text;
+}
+
 /**
  * Get formatted combined user & server info to display text
  * @param user user name
@@ -229,19 +241,9 @@ export const encodePlayerName = (user: string): string => {
  * @returns formatted display text
  */
 const getUserInfoInServerDisplayText = (user: string, server: OnlineServerItem, mapIndexCacheMap: Map<string, number>): string => {
-    const mapId = server.map_id;
+      const infoText = `${encodePlayerName(user)} is in:\n ${getServerDisplayRaw(server, mapIndexCacheMap)}`;
 
-    const mapPathArr = mapId.split('/');
-
-    const mapName = mapPathArr[mapPathArr.length - 1];
-
-    const serverUrl = getJoinServerUrl(server);
-
-    const mapIndex = mapIndexCacheMap.get(mapName)! + 1;
-
-    const infoText = `${encodePlayerName(user)} is in ${inlineCode(server.country)} ${bold(server.name)}: ${inlineCode(server.current_players + '/' + server.max_players)} (${mapName} / #${mapIndex})\n`;
-
-    const text = infoText + serverUrl + '\n\n';
+    const text = infoText + '\n\n';
 
     return text;
 }
