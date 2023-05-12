@@ -54,9 +54,11 @@ export class LocationService {
         });
 
         try {
-            const res = await axios.post<IPInfoResponse[]>(LOCATION_QUERY_API_URL, needQueryIps);
-            this.writeCache(res.data);
-            logger.info(res.data);
+            if (needQueryIps.length > 0) {
+                const res = await axios.post<IPInfoResponse[]>(LOCATION_QUERY_API_URL, needQueryIps);
+                this.writeCache(res.data);
+                logger.info(res.data);
+            }
         } catch (e) {
             logger.error(e);
         }
