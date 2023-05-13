@@ -1,6 +1,6 @@
 {
   "name": "rwr-discord-bot-app",
-  "version": "0.1.2",
+  "version": "0.2.2",
   "description": "",
   "main": "index.js",
   "scripts": {
