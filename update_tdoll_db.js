@@ -13,10 +13,33 @@ if (!fs.existsSync(TARGET_TEMP_DIR)) {
     fs.mkdirSync(TARGET_TEMP_DIR);
 }
 
+const RARITY_STARS_PREFIX = 'doll-rarity-';
+const RARITY_CLASS_PREFIX = 'doll-classification-';
+
 const getTdollInfo = (element) => {
     const _$1 = cheerio.load(element);
 
     const attributes = element.attributes;
+
+
+    let rarityStars = '';
+    let rarityClass = '';
+    
+    attributes.forEach(attr => {
+        if (attr.name === 'class') {
+            const classVal = attr.value;
+
+            const clsList = classVal.split(' ');
+
+            clsList.forEach(cls => {
+                if (cls.startsWith(RARITY_STARS_PREFIX)) {
+                    rarityStars = cls.split(RARITY_STARS_PREFIX)[1];
+                } else if (cls.startsWith(RARITY_CLASS_PREFIX)) {
+                    rarityClass = cls.split(RARITY_CLASS_PREFIX)[1];
+                }
+            })
+        }
+    });
 
     const dataOptions = _$1.root().data();
 
@@ -67,8 +90,8 @@ const getTdollInfo = (element) => {
     const resItem = {
         name,
         id: isNaN(index) ? -1 : index,
-        class: targetClass,
-        star: targetStars
+        class: rarityClass,
+        star: rarityStars
     };
 
     console.log('resItem', resItem);
