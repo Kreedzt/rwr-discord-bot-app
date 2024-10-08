@@ -26,39 +26,41 @@ const getTdollInfo = (element) => {
     const name = _$1('span.name').text();
     const index = parseInt(_$1('span.index').text().trim());
 
-    const rarityStarsSrc = _$1('img.rarity-stars').attr('src');
-    const rarityClassSrc = _$1('img.rarity-class').attr('src');
+    const classAttr = attributes.filter(attr => attr.name === 'class')[0].value;
+
+    const rarityStarsSrc = classAttr;
+    const rarityClassSrc = classAttr;
 
     let targetClass = '';
-    if (rarityClassSrc.includes('SMG')) {
+    if (rarityClassSrc.includes('doll-classification-SMG')) {
         targetClass = 'SMG';
-    } else if (rarityClassSrc.includes('MG')) {
+    } else if (rarityClassSrc.includes('doll-classification-MG')) {
         targetClass = 'MG';
-    } else if (rarityClassSrc.includes('AR')) {
+    } else if (rarityClassSrc.includes('doll-classification-AR')) {
         targetClass = 'AR';
-    } else if (rarityClassSrc.includes('HG')) {
+    } else if (rarityClassSrc.includes('doll-classification-HG')) {
         targetClass = 'HG';
-    } else if (rarityClassSrc.includes('RF')) {
+    } else if (rarityClassSrc.includes('doll-classification-RF')) {
         targetClass = 'RF';
-    } else if (rarityClassSrc.includes('SG')) {
+    } else if (rarityClassSrc.includes('doll-classification-SG')) {
         targetClass = 'SG';
     }
 
     let targetStars = '';
-    if (rarityStarsSrc.includes('6star')) {
+    if (rarityStarsSrc.includes('doll-rarity-6')) {
         targetStars = '6';
-    } else if (rarityStarsSrc.includes('5star')) {
+    } else if (rarityStarsSrc.includes('doll-rarity-5')) {
         targetStars = '5';
-    } else if (rarityStarsSrc.includes('4star')) {
+    } else if (rarityStarsSrc.includes('doll-rarity-4')) {
         targetStars = '4';
     }
-    else if (rarityStarsSrc.includes('3star')) {
+    else if (rarityStarsSrc.includes('doll-rarity-3')) {
         targetStars = '3';
     }
-    else if (rarityStarsSrc.includes('2star')) {
+    else if (rarityStarsSrc.includes('doll-rarity-2')) {
         targetStars = '2';
     }
-    else if (rarityStarsSrc.includes('EXTRAstar')) {
+    else if (rarityStarsSrc.includes('doll-rarity-EXTRA')) {
         targetStars = 'Extra';
     }
 
@@ -86,7 +88,7 @@ axios.get(TARGET_URL).then(res => {
 
     const $ = cheerio.load(htmlContent);
 
-    const tdollList = $('span.card-bg-small');
+    const tdollList = $('span.gfl-doll-card');
 
     const jsonData = [];
 
